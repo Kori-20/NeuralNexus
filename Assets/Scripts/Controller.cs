@@ -1,0 +1,220 @@
+using System.Collections;
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
+
+public class Controller : MonoBehaviour
+{
+    [Header("Input")]
+    [SerializeField] private PlayerInput playerInput;
+
+    [Header("Cursor")]
+    [SerializeField, Range(0.1f, 2f)] private float cursorSpeed = 1f;
+    [SerializeField] private bool cursorVisible = true;
+    Vector3 initialMousePosition = Vector3.zero;
+
+    [Header("Crosshair")]
+    [SerializeField] private Image crosshair;
+    private Color crosshairColor;
+
+    [Header("Camera")]
+    [SerializeField] public Camera cam;
+    private PostProcessVolume blurVolume;
+
+    [Header("Fire")]
+    [SerializeField] private bool canFire = true;
+    [SerializeField] private bool isCC = false;
+
+    [Header("References")]
+    [SerializeField] private MissionGear missionGear;
+    [SerializeField] private GunBehaviour gunBehave;
+    [SerializeField] private int currentWeaponSlot = 0;
+
+    [Header("CoverSystem")]
+    private float coverT = 0;
+    [SerializeField] private float coverSpeed = 1f;
+
+
+    private void Awake()
+    {
+
+    }
+
+    private void OnEnable()
+    {
+        playerInput.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        playerInput.enabled = false;
+    }
+
+    private void Start()
+    {
+        InputSetup();
+        transform.position = CoverManager.Instance.GetCoverCenter();
+
+        gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
+        InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
+        InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
+            missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
+            missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+
+        crosshairColor = crosshair.color;
+
+        Cursor.visible = cursorVisible;
+        Cursor.lockState = CursorLockMode.Confined;
+        initialMousePosition = new Vector3(Screen.width / 2, Screen.height / 2, -5);
+        crosshair.transform.position = initialMousePosition;
+
+        blurVolume = cam.gameObject.GetComponent<PostProcessVolume>();
+    }
+
+    private void Update()
+    {
+        if (IsCursorWithinScreen())
+        {
+            if (Time.timeScale == 0) MoveCursor(1);
+            else MoveCursor(cursorSpeed);
+        }
+    }
+
+    private void MoveCursor(float mouseSpeed)
+    {
+        Vector3 mouseDelta = Input.mousePosition - initialMousePosition;
+        Vector3 sensitivityAdjustedDelta = mouseDelta * mouseSpeed;
+        Vector3 newCrosshairPosition = crosshair.transform.position + sensitivityAdjustedDelta;
+
+        newCrosshairPosition.x = Mathf.Clamp(newCrosshairPosition.x, 0, Screen.width);
+        newCrosshairPosition.y = Mathf.Clamp(newCrosshairPosition.y, 0, Screen.height);
+
+        crosshair.transform.position = newCrosshairPosition;
+        initialMousePosition = Input.mousePosition;
+    }
+
+    private void MouseCursorAlign() 
+    {
+        crosshair.transform.position = Input.mousePosition;
+    }
+
+    private void MouseCursorColor(bool toCursor)
+    {
+        if (toCursor) crosshair.color = crosshairColor;
+        else crosshair.color = new Color(1.0f - crosshairColor.r, 1.0f - crosshairColor.g, 1.0f - crosshairColor.b, crosshairColor.a);
+    }
+
+    private bool IsCursorWithinScreen()
+    {
+        return Input.mousePosition.x >= 0 && Input.mousePosition.x <= Screen.width &&
+               Input.mousePosition.y >= 0 && Input.mousePosition.y <= Screen.height;
+    }
+
+    #region Input Actions
+
+    private void InputSetup()
+    {
+        playerInput = GetComponent<PlayerInput>();
+
+        playerInput.actions["Exit"].performed += ctx => ExitMenu();
+        playerInput.actions["Pause"].performed += ctx => ExitMenu();
+
+        playerInput.actions["Shoot"].started += ctx => StartShooting();
+        playerInput.actions["Shoot"].canceled += ctx => StopShooting();
+
+        playerInput.actions["GoToLeftCover"].performed += ctx => SwitchCover(ECoverDirection.Left);
+        playerInput.actions["GoToRIghtCover"].performed += ctx => SwitchCover(ECoverDirection.Right);
+
+        playerInput.actions["SwitchWeapon1"].performed += ctx => SwitchWeapon(0);
+        playerInput.actions["SwitchWeapon2"].performed += ctx => SwitchWeapon(1);
+        playerInput.actions["SwitchWeapon3"].performed += ctx => SwitchWeapon(2);
+
+        playerInput.actions["Reload"].performed += ctx => gunBehave.Reload();
+    }
+
+    public void StartShooting()
+    {
+        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null)
+        {
+            gunBehave.Shoot();
+        }
+    }
+
+    private void StopShooting()
+    {
+        gunBehave.StopShooting();
+    }
+
+    private void SwitchCover(ECoverDirection value)
+    {
+        if (CoverManager.Instance.CheckForCover(value, true) && Time.timeScale != 0)
+        {
+            transform.position = CoverManager.Instance.GetCoverCenter();
+        }
+    }
+
+    private void SwitchWeapon(int weaponSlot)
+    {
+        if (missionGear.GetGunInSlot(weaponSlot) != null && Time.timeScale != 0)
+        {
+            if (weaponSlot != currentWeaponSlot)
+            {
+                //Reverse the animation of the current weapon slot
+                InGameUiManager.Instance.AnimateGunSlots(true, currentWeaponSlot);
+
+                currentWeaponSlot = weaponSlot;
+                gunBehave.StopReload();
+                gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
+                gunBehave.SetGunIndex(weaponSlot);
+
+                //Animate the new weapon slot
+                InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
+                InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
+                missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
+                missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+
+                gunBehave.AmmoCheck();
+                //Debug.Log("Switch#0" + currentWeaponSlot + "##" + missionGear.GetGunInSlot(currentWeaponSlot).name); return;
+            }
+            Debug.Log("Already in slot " + weaponSlot); return;
+        }
+        Debug.LogWarning("No gun assigned to weapon slot " + weaponSlot);
+    }
+
+    public void ExitMenu()
+    {
+        if (MenuUiManager.Instance != null && InGameUiManager.Instance == null) MenuUiManager.Instance.CloseMenu();
+        else PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        if (blurVolume != null)
+        {
+            if (InGameUiManager.Instance.PauseGame())
+            {
+                blurVolume.enabled = true;
+                MouseCursorAlign();
+                MouseCursorColor(false);
+            }
+            else 
+            {
+                blurVolume.enabled = false;
+                MouseCursorColor(true);
+            }
+        }
+        else Debug.LogWarning("Post Process Volume not found");
+    }
+
+    #endregion
+
+    #region Getters & Setters
+    public void SetCanFire(bool value) { canFire = value; }
+    public bool GetCanFire() { return canFire; }
+    public void SetIsCC(bool value) { isCC = value; }
+    public bool GetIsCC() { return isCC; }
+    public Camera GetCamera() { return cam; }
+    #endregion
+}
