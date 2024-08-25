@@ -91,7 +91,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Ability 1"",
+                    ""name"": ""QAbility"",
                     ""type"": ""Button"",
                     ""id"": ""757847c5-6175-4421-bc92-90f185192c4f"",
                     ""expectedControlType"": ""Button"",
@@ -100,7 +100,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Ability 2"",
+                    ""name"": ""WAbility"",
                     ""type"": ""Button"",
                     ""id"": ""9f5a697e-2ac8-493d-9f6c-acf5de46a71e"",
                     ""expectedControlType"": ""Button"",
@@ -109,7 +109,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Ability 3"",
+                    ""name"": ""EAbility"",
                     ""type"": ""Button"",
                     ""id"": ""df1292d1-7ca0-4a86-9657-0bc1492e15b2"",
                     ""expectedControlType"": ""Button"",
@@ -230,7 +230,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Ability 1"",
+                    ""action"": ""QAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -241,7 +241,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Ability 2"",
+                    ""action"": ""WAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -252,7 +252,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Ability 3"",
+                    ""action"": ""EAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -303,9 +303,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Game_GoToLeftCover = m_Game.FindAction("GoToLeftCover", throwIfNotFound: true);
         m_Game_GoToRightCover = m_Game.FindAction("GoToRightCover", throwIfNotFound: true);
         m_Game_Reload = m_Game.FindAction("Reload", throwIfNotFound: true);
-        m_Game_Ability1 = m_Game.FindAction("Ability 1", throwIfNotFound: true);
-        m_Game_Ability2 = m_Game.FindAction("Ability 2", throwIfNotFound: true);
-        m_Game_Ability3 = m_Game.FindAction("Ability 3", throwIfNotFound: true);
+        m_Game_QAbility = m_Game.FindAction("QAbility", throwIfNotFound: true);
+        m_Game_WAbility = m_Game.FindAction("WAbility", throwIfNotFound: true);
+        m_Game_EAbility = m_Game.FindAction("EAbility", throwIfNotFound: true);
         m_Game_ADS = m_Game.FindAction("ADS", throwIfNotFound: true);
         m_Game_Exit = m_Game.FindAction("Exit", throwIfNotFound: true);
         m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
@@ -377,9 +377,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_GoToLeftCover;
     private readonly InputAction m_Game_GoToRightCover;
     private readonly InputAction m_Game_Reload;
-    private readonly InputAction m_Game_Ability1;
-    private readonly InputAction m_Game_Ability2;
-    private readonly InputAction m_Game_Ability3;
+    private readonly InputAction m_Game_QAbility;
+    private readonly InputAction m_Game_WAbility;
+    private readonly InputAction m_Game_EAbility;
     private readonly InputAction m_Game_ADS;
     private readonly InputAction m_Game_Exit;
     private readonly InputAction m_Game_Pause;
@@ -394,9 +394,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @GoToLeftCover => m_Wrapper.m_Game_GoToLeftCover;
         public InputAction @GoToRightCover => m_Wrapper.m_Game_GoToRightCover;
         public InputAction @Reload => m_Wrapper.m_Game_Reload;
-        public InputAction @Ability1 => m_Wrapper.m_Game_Ability1;
-        public InputAction @Ability2 => m_Wrapper.m_Game_Ability2;
-        public InputAction @Ability3 => m_Wrapper.m_Game_Ability3;
+        public InputAction @QAbility => m_Wrapper.m_Game_QAbility;
+        public InputAction @WAbility => m_Wrapper.m_Game_WAbility;
+        public InputAction @EAbility => m_Wrapper.m_Game_EAbility;
         public InputAction @ADS => m_Wrapper.m_Game_ADS;
         public InputAction @Exit => m_Wrapper.m_Game_Exit;
         public InputAction @Pause => m_Wrapper.m_Game_Pause;
@@ -430,15 +430,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
-            @Ability1.started += instance.OnAbility1;
-            @Ability1.performed += instance.OnAbility1;
-            @Ability1.canceled += instance.OnAbility1;
-            @Ability2.started += instance.OnAbility2;
-            @Ability2.performed += instance.OnAbility2;
-            @Ability2.canceled += instance.OnAbility2;
-            @Ability3.started += instance.OnAbility3;
-            @Ability3.performed += instance.OnAbility3;
-            @Ability3.canceled += instance.OnAbility3;
+            @QAbility.started += instance.OnQAbility;
+            @QAbility.performed += instance.OnQAbility;
+            @QAbility.canceled += instance.OnQAbility;
+            @WAbility.started += instance.OnWAbility;
+            @WAbility.performed += instance.OnWAbility;
+            @WAbility.canceled += instance.OnWAbility;
+            @EAbility.started += instance.OnEAbility;
+            @EAbility.performed += instance.OnEAbility;
+            @EAbility.canceled += instance.OnEAbility;
             @ADS.started += instance.OnADS;
             @ADS.performed += instance.OnADS;
             @ADS.canceled += instance.OnADS;
@@ -473,15 +473,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
-            @Ability1.started -= instance.OnAbility1;
-            @Ability1.performed -= instance.OnAbility1;
-            @Ability1.canceled -= instance.OnAbility1;
-            @Ability2.started -= instance.OnAbility2;
-            @Ability2.performed -= instance.OnAbility2;
-            @Ability2.canceled -= instance.OnAbility2;
-            @Ability3.started -= instance.OnAbility3;
-            @Ability3.performed -= instance.OnAbility3;
-            @Ability3.canceled -= instance.OnAbility3;
+            @QAbility.started -= instance.OnQAbility;
+            @QAbility.performed -= instance.OnQAbility;
+            @QAbility.canceled -= instance.OnQAbility;
+            @WAbility.started -= instance.OnWAbility;
+            @WAbility.performed -= instance.OnWAbility;
+            @WAbility.canceled -= instance.OnWAbility;
+            @EAbility.started -= instance.OnEAbility;
+            @EAbility.performed -= instance.OnEAbility;
+            @EAbility.canceled -= instance.OnEAbility;
             @ADS.started -= instance.OnADS;
             @ADS.performed -= instance.OnADS;
             @ADS.canceled -= instance.OnADS;
@@ -517,9 +517,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnGoToLeftCover(InputAction.CallbackContext context);
         void OnGoToRightCover(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
-        void OnAbility1(InputAction.CallbackContext context);
-        void OnAbility2(InputAction.CallbackContext context);
-        void OnAbility3(InputAction.CallbackContext context);
+        void OnQAbility(InputAction.CallbackContext context);
+        void OnWAbility(InputAction.CallbackContext context);
+        void OnEAbility(InputAction.CallbackContext context);
         void OnADS(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);

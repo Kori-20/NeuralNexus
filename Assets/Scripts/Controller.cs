@@ -7,6 +7,10 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class Controller : MonoBehaviour
 {
+    [Header("MotionState")]
+    [SerializeField] private Sprite covereringSprite;
+    [SerializeField] private Sprite shootingSprite;
+
     [Header("Input")]
     [SerializeField] private PlayerInput playerInput;
 
@@ -31,6 +35,10 @@ public class Controller : MonoBehaviour
     [Header("Fire")]
     [SerializeField] private bool canFire = true;
     [SerializeField] private bool isCC = false;
+
+    [Header("Switch Gun")]
+    private bool canSwitchGun = true;
+    private float gunSwitchCooldown = 0.25f;
 
     [Header("References")]
     [SerializeField] private MissionGear missionGear;
@@ -137,11 +145,23 @@ public class Controller : MonoBehaviour
         playerInput.actions["SwitchWeapon1"].performed += ctx => SwitchWeapon(0);
         playerInput.actions["SwitchWeapon2"].performed += ctx => SwitchWeapon(1);
         playerInput.actions["SwitchWeapon3"].performed += ctx => SwitchWeapon(2);
+
+        playerInput.actions["QAbility"].started += ctx => CastAbility(EAbilityKey.Q);
+        playerInput.actions["WAbility"].started += ctx => CastAbility(EAbilityKey.W);
+        playerInput.actions["EAbility"].started += ctx => CastAbility(EAbilityKey.E);
+
+
+        playerInput.actions["QAbility"].canceled += ctx => CancelAbilityCast(EAbilityKey.Q);
+        playerInput.actions["WAbility"].canceled += ctx => CancelAbilityCast(EAbilityKey.W);
+        playerInput.actions["EAbility"].canceled += ctx => CancelAbilityCast(EAbilityKey.E);
+
+        playerInput.actions["ADS"].started += ctx => gunBehave.AimDownSights(true);
+        playerInput.actions["ADS"].canceled += ctx => gunBehave.AimDownSights(false);
     }
 
     public void StartShooting()
     {
-        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null)
+        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC)
         {
             gunBehave.Shoot();
         }
@@ -150,11 +170,12 @@ public class Controller : MonoBehaviour
     private void StopShooting()
     {
         gunBehave.StopShooting();
+        ChangeSprite(EPlayerMotion.Cover);
     }
 
     private void SwitchCover(ECoverDirection value)
     {
-        if (CoverManager.Instance.CheckForCover(value, true) && Time.timeScale != 0)
+        if (!inTransit && Time.timeScale != 0 && CoverManager.Instance.CheckForCover(value, true))
         {
             CoverManager.Instance.GetCoverPathPoint();
             StartCoroutine(MoveAlongPath(CoverManager.Instance.GetCoverPathPoint()));
@@ -162,9 +183,10 @@ public class Controller : MonoBehaviour
     }
 
     private IEnumerator MoveAlongPath(Vector3[] path)
-    {
+    { 
         inTransit = true;
-        gunBehave.StopShooting();
+        CoverManager.Instance.PassiveCoverCheck();//Ui update
+
         for (int i = 0; i < path.Length; i++)
         {
             Vector3 startPosition = transform.position;
@@ -181,16 +203,20 @@ public class Controller : MonoBehaviour
             }
         }
         transform.position = path[path.Length - 1];
+
         inTransit = false;
         Debug.Log("Reached destination");
     }
 
     private void SwitchWeapon(int weaponSlot)
     {
-        if (missionGear.GetGunInSlot(weaponSlot) != null && Time.timeScale != 0)
+        if (missionGear.GetGunInSlot(weaponSlot) != null && Time.timeScale != 0 && canSwitchGun)
         {
             if (weaponSlot != currentWeaponSlot)
             {
+                ChangeSprite(EPlayerMotion.Cover);
+                StartCoroutine(GunSwitchCooldown());
+
                 //Reverse the animation of the current weapon slot
                 InGameUiManager.Instance.AnimateGunSlots(true, currentWeaponSlot);
 
@@ -242,6 +268,20 @@ public class Controller : MonoBehaviour
         playerSprite.transform.localPosition = originalPosition;
     }
 
+    private IEnumerator GunSwitchCooldown()
+    {
+        canSwitchGun = false;
+        float elapsed = 0.0f;
+
+        while (elapsed < gunSwitchCooldown)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        canSwitchGun = true;
+    }
+
     public void ExitMenu()
     {
         if (MenuUiManager.Instance != null && InGameUiManager.Instance == null) MenuUiManager.Instance.CloseMenu();
@@ -269,6 +309,66 @@ public class Controller : MonoBehaviour
 
     #endregion
 
+    public void ChangeSprite(EPlayerMotion motion)
+    {
+        switch (motion)
+        {
+            case EPlayerMotion.Cover:
+                playerSprite.sprite = covereringSprite;
+                break;
+
+            case EPlayerMotion.Shoot:
+                playerSprite.sprite = shootingSprite;
+                break;
+
+            case EPlayerMotion.Transit:
+                //No transit animation for now
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void CastAbility(EAbilityKey key)
+    {
+        switch (key)
+        {
+            case EAbilityKey.Q:
+                Debug.Log("Ability Q");
+                break;
+
+            case EAbilityKey.W:
+                Debug.Log("Ability W");
+                break;
+
+            case EAbilityKey.E:
+                Debug.Log("Ability E");
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void CancelAbilityCast(EAbilityKey key)
+    {
+        switch (key)
+        {
+            case EAbilityKey.Q:
+                break;
+
+            case EAbilityKey.W:
+                break;
+
+            case EAbilityKey.E:
+                break;
+
+            default:
+                break;
+        }
+    }
+
     #region Getters & Setters
     public void SetCanFire(bool value) { canFire = value; }
     public bool GetCanFire() { return canFire; }
@@ -279,3 +379,5 @@ public class Controller : MonoBehaviour
     public bool GetTransitStatus() { return inTransit; }
     #endregion
 }
+
+

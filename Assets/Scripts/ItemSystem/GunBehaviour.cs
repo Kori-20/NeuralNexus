@@ -28,8 +28,6 @@ public class GunBehaviour : MonoBehaviour
     #region Fire Weapon Logic
     public void Shoot()
     {
-        if (playerControl.GetCanFire() && !playerControl.GetIsCC())
-        {
             playerControl.SetCanFire(false);
 
             if (currentGun.isAutomatic)
@@ -42,7 +40,6 @@ public class GunBehaviour : MonoBehaviour
             }
             
             if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
-        }
     }
 
     public void StopShooting()
@@ -83,6 +80,7 @@ public class GunBehaviour : MonoBehaviour
     private void FireBullet(Vector3 direction)
     {
         StopReload();
+        playerControl.ChangeSprite(EPlayerMotion.Shoot);
 
         //Recoil Character
         playerControl.PlayerRecoil();
@@ -101,7 +99,7 @@ public class GunBehaviour : MonoBehaviour
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)//This method will be overriden by the child classes
     {
-        //instance projectile type according to gun's type
+        //instance projectile type according to gun's registered 
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)
@@ -151,6 +149,11 @@ public class GunBehaviour : MonoBehaviour
             InGameUiManager.Instance.StopFillReload();
             reloadCoroutine = null;
         }
+    }
+
+    public void AimDownSights(bool value)
+    {
+        //Degub.Log("Aiming Down Sights");
     }
 
     private IEnumerator ReloadCoroutine()

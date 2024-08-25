@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ability 1",
+                    "name": "QAbility",
                     "type": "Button",
                     "id": "757847c5-6175-4421-bc92-90f185192c4f",
                     "expectedControlType": "Button",
@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ability 2",
+                    "name": "WAbility",
                     "type": "Button",
                     "id": "9f5a697e-2ac8-493d-9f6c-acf5de46a71e",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ability 3",
+                    "name": "EAbility",
                     "type": "Button",
                     "id": "df1292d1-7ca0-4a86-9657-0bc1492e15b2",
                     "expectedControlType": "Button",
@@ -208,7 +208,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ability 1",
+                    "action": "QAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,7 +219,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ability 2",
+                    "action": "WAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -230,7 +230,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ability 3",
+                    "action": "EAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

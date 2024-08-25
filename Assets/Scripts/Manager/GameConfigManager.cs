@@ -62,3 +62,17 @@ public enum EWeaponType
     DualPistol,
     Pistol,
 }
+
+public enum EPlayerMotion
+{
+    Shoot,
+    Cover,
+    Transit,
+}
+
+public enum EAbilityKey
+{
+    Q,
+    W,
+    E,
+}

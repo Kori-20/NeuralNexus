@@ -110,7 +110,7 @@ public class CoverManager : MonoBehaviour
         return false;
     }
 
-    private void PassiveCoverCheck() //Used to check where player has cover for Ui purposes
+    public void PassiveCoverCheck() //Used to check where player has cover for Ui purposes
     {
         if (CheckForCover(ECoverDirection.Left, false)) InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Left, true);
         else InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Left, false);
