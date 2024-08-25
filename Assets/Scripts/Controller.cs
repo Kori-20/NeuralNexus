@@ -177,6 +177,7 @@ public class Controller : MonoBehaviour
     {
         if (!inTransit && Time.timeScale != 0 && CoverManager.Instance.CheckForCover(value, true))
         {
+            ChangeSprite(EPlayerMotion.Cover);
             CoverManager.Instance.GetCoverPathPoint();
             StartCoroutine(MoveAlongPath(CoverManager.Instance.GetCoverPathPoint()));
         }
