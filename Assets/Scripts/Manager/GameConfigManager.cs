@@ -40,3 +40,12 @@ public enum EItemRarity
     Mythic,
     Nexus
 }
+
+public enum EDamageType
+{
+    Blunt,
+    Piercing,
+    Explosive,
+    Energy,
+    Impact,
+}

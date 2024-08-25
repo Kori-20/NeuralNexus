@@ -23,6 +23,11 @@ public class Controller : MonoBehaviour
     [SerializeField] public Camera cam;
     private PostProcessVolume blurVolume;
 
+    [Header("FakeRecoil")]
+    private float recoilDuration = 0.01f;
+    private float recoilMagnitude = 0.1f;
+    [SerializeField] private SpriteRenderer playerSprite;
+
     [Header("Fire")]
     [SerializeField] private bool canFire = true;
     [SerializeField] private bool isCC = false;
@@ -34,8 +39,8 @@ public class Controller : MonoBehaviour
 
     [Header("CoverSystem")]
     private float coverT = 0;
-    [SerializeField] private float coverSpeed = 1f;
-
+    [SerializeField] private float coverSpeed = 5f;
+    private bool inTransit = false;
 
     private void Awake()
     {
@@ -95,7 +100,7 @@ public class Controller : MonoBehaviour
         initialMousePosition = Input.mousePosition;
     }
 
-    private void MouseCursorAlign() 
+    private void MouseCursorAlign()
     {
         crosshair.transform.position = Input.mousePosition;
     }
@@ -151,8 +156,33 @@ public class Controller : MonoBehaviour
     {
         if (CoverManager.Instance.CheckForCover(value, true) && Time.timeScale != 0)
         {
-            transform.position = CoverManager.Instance.GetCoverCenter();
+            CoverManager.Instance.GetCoverPathPoint();
+            StartCoroutine(MoveAlongPath(CoverManager.Instance.GetCoverPathPoint()));
         }
+    }
+
+    private IEnumerator MoveAlongPath(Vector3[] path)
+    {
+        inTransit = true;
+        gunBehave.StopShooting();
+        for (int i = 0; i < path.Length; i++)
+        {
+            Vector3 startPosition = transform.position;
+            Vector3 endPosition = path[i];
+            float journeyLength = Vector3.Distance(startPosition, endPosition);
+            float startTime = Time.time;
+
+            while (Vector3.Distance(transform.position, endPosition) > 0.1f)
+            {
+                float distCovered = (Time.time - startTime) * coverSpeed;
+                float fractionOfJourney = distCovered / journeyLength;
+                transform.position = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
+                yield return null;
+            }
+        }
+        transform.position = path[path.Length - 1];
+        inTransit = false;
+        Debug.Log("Reached destination");
     }
 
     private void SwitchWeapon(int weaponSlot)
@@ -183,6 +213,35 @@ public class Controller : MonoBehaviour
         Debug.LogWarning("No gun assigned to weapon slot " + weaponSlot);
     }
 
+    public void PlayerRecoil()
+    {
+        //Gets called when shooting, slightly shakes the player sprite to give the illusion of recoil, shake strength is based on weapon type & accuracy
+        StartCoroutine(ApplyRecoilShake());
+    }
+
+    private IEnumerator ApplyRecoilShake()
+    {
+        Vector3 originalPosition = playerSprite.transform.localPosition; // Store the original position of the player sprite
+        float elapsed = 0.0f;
+
+        while (elapsed < recoilDuration)
+        {
+            // Use UnityEngine.Random to generate the shake offset
+            float xOffset = UnityEngine.Random.Range(-1f, 1f) * recoilMagnitude;
+            float yOffset = UnityEngine.Random.Range(-1f, 1f) * recoilMagnitude;
+
+            // Apply the shake based on the original position
+            playerSprite.transform.localPosition = originalPosition + new Vector3(xOffset, yOffset, 0);
+
+            elapsed += Time.deltaTime;
+
+            yield return null; // Wait until the next frame
+        }
+
+        // Ensure the player sprite returns exactly to its original position
+        playerSprite.transform.localPosition = originalPosition;
+    }
+
     public void ExitMenu()
     {
         if (MenuUiManager.Instance != null && InGameUiManager.Instance == null) MenuUiManager.Instance.CloseMenu();
@@ -199,7 +258,7 @@ public class Controller : MonoBehaviour
                 MouseCursorAlign();
                 MouseCursorColor(false);
             }
-            else 
+            else
             {
                 blurVolume.enabled = false;
                 MouseCursorColor(true);
@@ -216,5 +275,7 @@ public class Controller : MonoBehaviour
     public void SetIsCC(bool value) { isCC = value; }
     public bool GetIsCC() { return isCC; }
     public Camera GetCamera() { return cam; }
+
+    public bool GetTransitStatus() { return inTransit; }
     #endregion
 }

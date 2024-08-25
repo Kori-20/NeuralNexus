@@ -11,6 +11,9 @@ public class CoverManager : MonoBehaviour
     [SerializeField] public int currentCoverIndex = 1; // starts in the middle 0-1-2
     private int oldCoverIndex;
 
+    private Vector3[] path = new Vector3[4];
+    private ECoverDirection coverDirection;
+
     private static CoverManager thisInstance;
 
     public static CoverManager Instance => thisInstance;
@@ -36,7 +39,7 @@ public class CoverManager : MonoBehaviour
 
     public Vector3 GetCoverCenter()
     {
-        if(currentCoverIndex < 0 || currentCoverIndex > covers.Length - 1)
+        if (currentCoverIndex < 0 || currentCoverIndex > covers.Length - 1)
         {
             Debug.Log("Desired cover index " + currentCoverIndex + " is out of bounds");
             currentCoverIndex = Random.Range(0, covers.Length);
@@ -47,13 +50,25 @@ public class CoverManager : MonoBehaviour
 
     public Vector3[] GetCoverPathPoint()
     {
-        Vector3[] path = new Vector3[4];
-
         path[0] = covers[oldCoverIndex].centerC.transform.position;
-        path[1] = (covers[oldCoverIndex].centerC.transform.position + covers[currentCoverIndex].centerC.transform.position) / 2f;
-        path[2] = (covers[oldCoverIndex].centerC.transform.position + path[1]) / 2f;
-        path[3] = (covers[currentCoverIndex].centerC.transform.position + path[1]) / 2f;
 
+        switch (coverDirection)
+        {
+            case ECoverDirection.Left:
+                path[1] = covers[oldCoverIndex].leftC.transform.position;
+                path[2] = covers[currentCoverIndex].rightC.transform.position;
+                path[3] = covers[currentCoverIndex].centerC.transform.position;
+                break;
+
+            case ECoverDirection.Right:
+                path[1] = covers[oldCoverIndex].rightC.transform.position;
+                path[2] = covers[currentCoverIndex].leftC.transform.position;
+                path[3] = covers[currentCoverIndex].centerC.transform.position;
+                break;
+
+            default:
+                break;
+        }
         return path;
     }
 
@@ -66,6 +81,7 @@ public class CoverManager : MonoBehaviour
                 if (currentCoverIndex > 0 && active)
                 {
                     currentCoverIndex--;
+                    coverDirection = ECoverDirection.Left;
                     return true;
                 }
                 else if (currentCoverIndex > 0 && !active)
@@ -78,6 +94,7 @@ public class CoverManager : MonoBehaviour
                 if (currentCoverIndex < covers.Length - 1 && active)
                 {
                     currentCoverIndex++;
+                    coverDirection = ECoverDirection.Right;
                     return true;
                 }
                 else if (currentCoverIndex < covers.Length - 1 && !active)
@@ -95,10 +112,10 @@ public class CoverManager : MonoBehaviour
 
     private void PassiveCoverCheck() //Used to check where player has cover for Ui purposes
     {
-        if(CheckForCover(ECoverDirection.Left, false)) InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Left, true);
+        if (CheckForCover(ECoverDirection.Left, false)) InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Left, true);
         else InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Left, false);
 
-        if(CheckForCover(ECoverDirection.Right, false)) InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Right, true);
+        if (CheckForCover(ECoverDirection.Right, false)) InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Right, true);
         else InGameUiManager.Instance.SetCoverArrows(ECoverDirection.Right, false);
     }
 }

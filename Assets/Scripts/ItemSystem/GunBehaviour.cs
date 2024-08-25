@@ -68,7 +68,7 @@ public class GunBehaviour : MonoBehaviour
             }
             else
             {
-                if (currentGun.currentAmmo > 0)
+                if (currentGun.currentAmmo > 0 && !playerControl.GetTransitStatus())
                 {
                     FireBullet(directionToHitPoint);
                 }
@@ -84,7 +84,10 @@ public class GunBehaviour : MonoBehaviour
     {
         StopReload();
 
-        if(currentGun.pelletsPerShot <= 0) Debug.LogWarning("Pellets per shot is set to " + currentGun.pelletsPerShot);
+        //Recoil Character
+        playerControl.PlayerRecoil();
+
+        if (currentGun.pelletsPerShot <= 0) Debug.LogWarning("Pellets per shot is set to " + currentGun.pelletsPerShot);
 
         for (int i = 0; i < currentGun.pelletsPerShot; i++)
         {
@@ -179,7 +182,7 @@ public class GunBehaviour : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayFire()
+    private IEnumerator DelayFire() //Forces non automatic weapons to follow their fire rate
     {
         yield return new WaitForSeconds(1f / currentGun.fireRate);
         playerControl.SetCanFire(true);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour, IDamageable
 {
     private int health = 100;
     private int damage = 10;
@@ -20,5 +20,16 @@ public class EnemyBase : MonoBehaviour
     void DamageCalc()
     {
 
+    }
+
+    void IDamageable.TakeDamage(int damage, EDamageType damageType)
+    {
+        health -= damage;
+        Debug.Log("Enemy took " + damage + " damage");
+        if (health <= 0)
+        {
+            Debug.Log("Enemy is dead");
+            Destroy(gameObject);
+        }
     }
 }
