@@ -38,5 +38,5 @@ MonoBehaviour:
   magazineSize: 350
   magsStored: 12
   weaponType: 6
-  currentAmmo: 350
-  currentMags: 12
+  currentAmmo: 244
+  currentMags: 11

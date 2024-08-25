@@ -1,30 +1,6 @@
 //Base class for all weapons both on player side and for the enemies
 //Exclusivity of weapons is defined by lack of implementation of certain weapons in the player or enemy class
 using UnityEngine;
-enum EWeaponType
-{
-    AssaultRifle,
-    Shotgun,
-    SniperRifle,
-    RocketLauncher,
-    GrenadeLauncher,
-    SubmachineGun,
-    HeavyMachineGun,
-    DualPistol,
-    Flamethrower,
-    Railgun,
-    AcidSprayer,
-    HarpoonGun,
-    LaserLens,
-    PlasmaCoil,
-    //Player Exclusive
-    Pistol,
-    //Enemy Exclusive
-    SuicideBomb,
-    QuadPistol,
-    ElectromagneticPulse,
-    DebrisLauncher
-}
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Equipment/Gun")]
 public class Gun : Equipment

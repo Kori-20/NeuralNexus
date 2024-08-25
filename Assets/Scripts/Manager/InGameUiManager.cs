@@ -8,21 +8,24 @@ public class InGameUiManager : MonoBehaviour
     private static InGameUiManager thisInstance;
     public static InGameUiManager Instance => thisInstance;
 
-    [Header("In Game Gun Menu")]
+    [Header("TextUi")]
     [SerializeField] private TextMeshProUGUI ammoAmmount;
     [SerializeField] private TextMeshProUGUI magAmmount;
-
+    [Header("Guns")]
     [SerializeField] private GameObject weaponsUI;
-    [SerializeField] private Image[] slotBckgList;
+    [SerializeField] private Image[] slotGunBckgList;
     [SerializeField] private Image[] slotGunList;
-
+    [SerializeField] private Animator[] slotAnimators;
+    [Header("Abilities")]
+    [SerializeField] private Image[] slotAbilityBckgList;
+    [SerializeField] private Image[] slotAbilityList;
+    [Header("Cover")]
     [SerializeField] private GameObject rightCoverArrow;
     [SerializeField] private GameObject leftCoverArrow;
-
-    [SerializeField] private Animator[] slotAnimators;
+    [Header("Reload")]
     [SerializeField] private Slider reloadProgress;
     private Coroutine reloadFillCoroutine = null;
-
+    [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
 
     private void Awake()
@@ -58,9 +61,9 @@ public class InGameUiManager : MonoBehaviour
 
     public void SyncGunIcons(int id, Sprite img, Color rarityColor)
     {
-        if (slotBckgList[id])
+        if (slotGunBckgList[id])
         {
-            slotBckgList[id].color = rarityColor;
+            slotGunBckgList[id].color = rarityColor;
         }
         else Debug.LogWarning("Slot Background not found");
 

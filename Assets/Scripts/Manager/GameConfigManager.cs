@@ -49,3 +49,16 @@ public enum EDamageType
     Energy,
     Impact,
 }
+
+public enum EWeaponType
+{
+    AssaultRifle,
+    Shotgun,
+    SniperRifle,
+    RocketLauncher,
+    GrenadeLauncher,
+    SubmachineGun,
+    HeavyMachineGun,
+    DualPistol,
+    Pistol,
+}
