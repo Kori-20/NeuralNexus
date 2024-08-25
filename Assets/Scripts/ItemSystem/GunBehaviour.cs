@@ -132,6 +132,7 @@ public class GunBehaviour : MonoBehaviour
         if(currentGun.currentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.currentAmmo < currentGun.magazineSize && Time.timeScale != 0)
         {
             Debug.Log("Reloading...");
+            playerControl.ChangeSprite(EPlayerMotion.Cover);
             reloadCoroutine = StartCoroutine(ReloadCoroutine());
             InGameUiManager.Instance.FillReload(currentGun.reloadTime);
         }
