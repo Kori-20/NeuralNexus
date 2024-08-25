@@ -85,6 +85,7 @@ public class Controller : MonoBehaviour
             if (Time.timeScale == 0) MoveCursor(1);
             else MoveCursor(cursorSpeed);
         }
+        else { StopShooting(); }
     }
 
     private void MoveCursor(float mouseSpeed)
@@ -128,6 +129,7 @@ public class Controller : MonoBehaviour
 
         playerInput.actions["Shoot"].started += ctx => StartShooting();
         playerInput.actions["Shoot"].canceled += ctx => StopShooting();
+        playerInput.actions["Reload"].performed += ctx => gunBehave.Reload();
 
         playerInput.actions["GoToLeftCover"].performed += ctx => SwitchCover(ECoverDirection.Left);
         playerInput.actions["GoToRIghtCover"].performed += ctx => SwitchCover(ECoverDirection.Right);
@@ -135,8 +137,6 @@ public class Controller : MonoBehaviour
         playerInput.actions["SwitchWeapon1"].performed += ctx => SwitchWeapon(0);
         playerInput.actions["SwitchWeapon2"].performed += ctx => SwitchWeapon(1);
         playerInput.actions["SwitchWeapon3"].performed += ctx => SwitchWeapon(2);
-
-        playerInput.actions["Reload"].performed += ctx => gunBehave.Reload();
     }
 
     public void StartShooting()

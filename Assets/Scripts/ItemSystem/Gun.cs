@@ -60,9 +60,4 @@ public class Gun : Equipment
         currentAmmo = magazineSize;
         currentMags = magsStored;
     }
-
-    public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)//This method will be overriden by the child classes
-    {
-        
-    }  
 }

@@ -91,12 +91,17 @@ public class GunBehaviour : MonoBehaviour
 
         for (int i = 0; i < currentGun.pelletsPerShot; i++)
         {
-            currentGun.SpawnWeaponProjetile(BulletSpread(direction));
+            SpawnWeaponProjetile(BulletSpread(direction));
         }
 
         currentGun.currentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.currentAmmo, currentGun.currentMags);
         if (currentGun.currentAmmo <= 0) Reload();
+    }
+
+    public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)//This method will be overriden by the child classes
+    {
+        //instance projectile type according to gun's type
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)
