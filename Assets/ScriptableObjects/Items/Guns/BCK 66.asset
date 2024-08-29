@@ -31,6 +31,7 @@ MonoBehaviour:
   fireRate: 3
   range: 0
   accuracy: 90
+  velocity: 5
   recoil: 0
   pelletsPerShot: 1
   isAutomatic: 0
@@ -41,5 +42,5 @@ MonoBehaviour:
   physicalType: 0
   elementType: 0
   projectilePrefab: {fileID: 8659441889846465044, guid: b925ef453f4492747884d26c87fe0861, type: 3}
-  currentAmmo: 20
+  currentAmmo: 17
   currentMags: 1

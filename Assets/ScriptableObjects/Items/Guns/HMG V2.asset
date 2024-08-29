@@ -31,6 +31,7 @@ MonoBehaviour:
   fireRate: 50
   range: 0
   accuracy: 50
+  velocity: 50
   recoil: 0.1
   pelletsPerShot: 1
   isAutomatic: 1

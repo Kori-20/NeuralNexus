@@ -81,15 +81,12 @@ public class GunBehaviour : MonoBehaviour
     {
         StopReload();
         playerControl.ChangeSprite(EPlayerMotion.Shoot);
-
-        //Recoil Character
         playerControl.PlayerRecoil();
-
-        if (currentGun.pelletsPerShot <= 0) Debug.LogWarning("Pellets per shot is set to " + currentGun.pelletsPerShot);
 
         for (int i = 0; i < currentGun.pelletsPerShot; i++)
         {
-            SpawnWeaponProjetile(BulletSpread(direction));
+            Vector3 spreadDirection = BulletSpread(direction);
+            SpawnWeaponProjetile(spreadDirection);
         }
 
         currentGun.currentAmmo--;
@@ -97,7 +94,7 @@ public class GunBehaviour : MonoBehaviour
         if (currentGun.currentAmmo <= 0) Reload();
     }
 
-    public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)//This method will be overriden by the child classes
+    public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
     {
         ProjectileManager.Instance.SpawnProjectile(currentGun.projectilePrefab, shootPoint.position, directionPostSpread,
             (int)currentGun.damage, currentGun.velocity, currentGun.physicalType,
@@ -106,26 +103,15 @@ public class GunBehaviour : MonoBehaviour
 
     private Vector3 BulletSpread(Vector3 targetPoint)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, targetPoint, out hit, rayCastDistance))
-        {
-            //Debug.Log("Hit object: " + hit.collider.gameObject.name);
-            Debug.DrawLine(shootPoint.position, hit.point, Color.blue, .5f);
+        float spreadX = Random.Range(-spreadMath, spreadMath);
+        float spreadY = Random.Range(-spreadMath, spreadMath);
 
-            Vector3 dir = (hit.point - shootPoint.position).normalized;
-            Vector3 spreadDirection = new Vector3(
-                UnityEngine.Random.Range(-spreadMath, spreadMath),
-                UnityEngine.Random.Range(-spreadMath, spreadMath), 0);
+        Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
+        Vector3 spreadDirection = spreadRotation * targetPoint;
 
-            Vector3 bulletDir = dir + spreadDirection;//Bullet dir defines trajectory
-            Debug.DrawRay(shootPoint.position, bulletDir * rayCastDistance, Color.green, .2f);
-            return bulletDir;
-        }
-        else
-        {
-            Debug.Log("No hit detected within the specified distance.");
-            return Vector3.zero;
-        }
+        Debug.DrawRay(shootPoint.position, spreadDirection * rayCastDistance, Color.magenta, 1f);
+
+        return spreadDirection.normalized;
     }
 
     public void Reload()
@@ -178,7 +164,7 @@ public class GunBehaviour : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.DrawLine(playerControl.GetCamera().transform.position, hit.point, Color.red, .5f);//Raycast Cam->Targer
+            //Debug.DrawLine(playerControl.GetCamera().transform.position, hit.point, Color.red, .5f);//Raycast Cam->Targer
             return hit.point;
         }
         return Vector3.zero;
@@ -206,7 +192,7 @@ public class GunBehaviour : MonoBehaviour
     {
             StopShooting();
             currentGun = gun;
-            spreadMath = spreadCurve.Evaluate(currentGun.accuracy);
+            spreadMath = spreadCurve.Evaluate(currentGun.accuracy)*25;
     }
 
     public void SetGunIndex(int index)

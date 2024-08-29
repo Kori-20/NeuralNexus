@@ -27,11 +27,12 @@ public class BaseProjectile : MonoBehaviour
         moveDir = bulletDir;
     }
 
-    //Move bullet
     private void Update()
     {
-       if(moveDir != Vector3.zero) transform.Translate(speed * Time.deltaTime * moveDir);
+        // Move the bullet along its forward axis
+        transform.Translate(speed * Time.deltaTime * Vector3.forward, Space.Self);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

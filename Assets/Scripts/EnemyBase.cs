@@ -8,15 +8,19 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private int shield = 200;
 
     [SerializeField] private EElementalDamageType myEnemyElement;
+    private SpriteRenderer sprite;
+    private Color spriteColor;
 
-    void Start()
+    private void OnValidate()
     {
-        
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.color = FindObjectOfType<GameConfigManager>().GetElementalColor(myEnemyElement);
     }
 
-    void Update()
+    private void Start()
     {
-        
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.color = FindObjectOfType<GameConfigManager>().GetElementalColor(myEnemyElement);
     }
 
     void IDamageable.CalculateDamage(int damage, EPhysicalDamageType physicalType, EElementalDamageType elementType)
@@ -56,7 +60,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     {
         if (DamageModifier.PhysicalDamageMultiplier.TryGetValue((physicalType, EDefenseStats.Shield), out float multiplier)) { }
         else multiplier = 1.0f;
-
+        Debug.Log("Shield Multi: " + multiplier);
         shield -= (int)(damage * multiplier);
         if (shield < 0) shield = 0;
     }
@@ -65,7 +69,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     {
         if (DamageModifier.PhysicalDamageMultiplier.TryGetValue((physicalType, EDefenseStats.Armor), out float multiplier)) { }
         else multiplier = 1.0f;
-
+        Debug.Log("Armor Multi: " + multiplier);
         armor -= (int)(damage * multiplier);
         if (armor < 0) armor = 0;
     }
@@ -77,12 +81,14 @@ public class EnemyBase : MonoBehaviour, IDamageable
             if (DamageModifier.PhysicalDamageMultiplier.TryGetValue((physicalType, EDefenseStats.ArmoredHealth), out float multiplier)) { }
             else multiplier = 1.0f;
             health -= (int)(damage * multiplier);
+            Debug.Log("Armored Health Multi: " + multiplier);
         }
         else
         {
             if (DamageModifier.PhysicalDamageMultiplier.TryGetValue((physicalType, EDefenseStats.Health), out float multiplier)) { }
             else multiplier = 1.0f;
             health -= (int)(damage * multiplier);
+            Debug.Log("Health Multi: " + multiplier);
         }
         
         if (health <= 0)

@@ -23,12 +23,15 @@ public class ProjectileManager : MonoBehaviour
 
     public void SpawnProjectile(GameObject projectilePrefab, Vector3 shootPoint, Vector3 direction, int damage, int velocity, EPhysicalDamageType physicalType, EElementalDamageType elementType)
     {
-        GameObject activeBullet = Instantiate(projectilePrefab, shootPoint, Quaternion.LookRotation(direction), transform);
-        activeBullet.GetComponent<BaseProjectile>().InitProjectile(damage, velocity, physicalType, elementType, direction);
-        AddToProjetilePool(activeBullet, EProjectileType.Player);
+        GameObject activeBullet = Instantiate(projectilePrefab, shootPoint, Quaternion.identity);
+        activeBullet.transform.forward = direction.normalized;
+        activeBullet.GetComponent<BaseProjectile>().InitProjectile(damage, velocity, physicalType, elementType, activeBullet.transform.forward);
+        AddToProjectilePool(activeBullet, EProjectileType.Player);
     }
 
-    private void AddToProjetilePool(GameObject projectileToAdd, EProjectileType type)
+
+
+    private void AddToProjectilePool(GameObject projectileToAdd, EProjectileType type)
     {
         switch(type)
         {

@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class RarityColorPair
+public struct RarityColorPair
 {
     public EItemRarity rarity;
     public Color color;
 }
 
+[Serializable]
+public struct ElementalColorPair
+{
+    public EElementalDamageType elementType;
+    public Color color;
+}
+
+
 public class GameConfigManager : MonoBehaviour
 {
     [SerializeField] private List<RarityColorPair> rarityColorPairs = new List<RarityColorPair>();
     private Dictionary<EItemRarity, Color> rarityMap = new Dictionary<EItemRarity, Color>();
+
+    [SerializeField] private List<ElementalColorPair> elementalColorPairs = new List<ElementalColorPair>();
+    private Dictionary<EElementalDamageType, Color> elementalMap = new Dictionary<EElementalDamageType, Color>();
 
     private void OnValidate()
     {
@@ -21,11 +32,23 @@ public class GameConfigManager : MonoBehaviour
         {
             rarityMap.Add(pair.rarity, pair.color);
         }
+
+        elementalMap.Clear();
+        foreach (var pair in elementalColorPairs)
+        {
+            elementalMap.Add(pair.elementType, pair.color);
+        }
     }
 
     public Color GetRarityColor(EItemRarity rarity)
     {
         if (rarityMap.TryGetValue(rarity, out Color color)) return color;
+        else return Color.white;
+    }
+
+    public Color GetElementalColor(EElementalDamageType elementType)
+    {
+        if (elementalMap.TryGetValue(elementType, out Color color)) return color;
         else return Color.white;
     }
 }
@@ -86,6 +109,7 @@ public enum EElementalDamageType
     Sound,
     Void,
 }
+
 
 public enum EDefenseStats
 {
