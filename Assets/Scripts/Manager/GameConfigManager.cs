@@ -92,4 +92,5 @@ public enum EDefenseStats
     Health,
     Armor,
     Shield,
+    ArmoredHealth,
 }
