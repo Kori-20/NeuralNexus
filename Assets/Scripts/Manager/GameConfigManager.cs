@@ -41,15 +41,6 @@ public enum EItemRarity
     Nexus
 }
 
-public enum EDamageType
-{
-    Blunt,
-    Piercing,
-    Explosive,
-    Energy,
-    Impact,
-}
-
 public enum EWeaponType
 {
     AssaultRifle,
@@ -75,4 +66,23 @@ public enum EAbilityKey
     Q,
     W,
     E,
+}
+
+public enum EPhysicalDamageType
+{
+    Blunt,
+    Piercing,
+    Explosive,
+    Energetic,
+}
+
+public enum EElementalDamageType
+{
+    Crystal,
+    Radiation,
+    Magma,
+    Plasma,
+    Sound,
+    Void,
+    Neutral,
 }

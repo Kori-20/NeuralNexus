@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, IDamageable
 {
-    private int health = 100;
-    private int damage = 10;
-    private int armor = 0;
-    private int shield = 0;
+    [SerializeField] private int health = 500;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private int armor = 120;
+    [SerializeField] private int shield = 200;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     }
 
-    void IDamageable.TakeDamage(int damage, EDamageType damageType)
+    void IDamageable.TakeDamage(int damage,EPhysicalDamageType physicalType, EElementalDamageType elementType)
     {
         health -= damage;
         Debug.Log("Enemy took " + damage + " damage");
@@ -31,5 +31,10 @@ public class EnemyBase : MonoBehaviour, IDamageable
             Debug.Log("Enemy is dead");
             Destroy(gameObject);
         }
+    }
+
+    private void CalculateDamage()
+    {
+
     }
 }

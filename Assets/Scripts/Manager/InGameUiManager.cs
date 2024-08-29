@@ -15,10 +15,11 @@ public class InGameUiManager : MonoBehaviour
     [SerializeField] private GameObject weaponsUI;
     [SerializeField] private Image[] slotGunBckgList;
     [SerializeField] private Image[] slotGunList;
-    [SerializeField] private Animator[] slotAnimators;
+    [SerializeField] private Animator[] gunAnims;
     [Header("Abilities")]
     [SerializeField] private Image[] slotAbilityBckgList;
     [SerializeField] private Image[] slotAbilityList;
+    [SerializeField] private Animator[] abilityAnims;
     [Header("Cover")]
     [SerializeField] private GameObject rightCoverArrow;
     [SerializeField] private GameObject leftCoverArrow;
@@ -113,7 +114,16 @@ public class InGameUiManager : MonoBehaviour
         if (!reverse) format = "GSlot_0" + (slotIndex + 1) + "_Open";
         else format = "GSlot_0" + (slotIndex + 1) + "_Close";
         Debug.Log("Playing: " + format);
-        slotAnimators[slotIndex].Play(format);
+        gunAnims[slotIndex].Play(format);
+    }
+
+    public void AnimateAbilitySlots(bool reverse, int slotIndex)
+    {
+        string format = "null";
+        if (!reverse) format = "GSlot_0" + (slotIndex + 1) + "_Open";
+        else format = "GSlot_0" + (slotIndex + 1) + "_Close";
+        Debug.Log("Playing: " + format);
+        gunAnims[slotIndex].Play(format);
     }
 
     public void SetCoverArrows(ECoverDirection direction, bool value)
