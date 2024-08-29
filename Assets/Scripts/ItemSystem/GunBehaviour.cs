@@ -99,7 +99,9 @@ public class GunBehaviour : MonoBehaviour
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)//This method will be overriden by the child classes
     {
-        //instance projectile type according to gun's registered 
+        //instance projectile type according to gun's registered
+        GameObject activeBullet = Instantiate(currentGun.projectilePrefab, shootPoint.position, Quaternion.LookRotation(directionPostSpread));
+        activeBullet.GetComponent<BaseProjectile>().InitProjectile((int)currentGun.damage, 10, currentGun.physicalType, currentGun.elementType, directionPostSpread);
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)

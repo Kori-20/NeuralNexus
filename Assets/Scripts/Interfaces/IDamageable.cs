@@ -1,20 +1,20 @@
 public interface IDamageable
 {
-    void TakeDamage(int damage, EPhysicalDamageType physicalType, EElementalDamageType elementType);
+    void CalculateDamage(int damage, EPhysicalDamageType physicalType, EElementalDamageType elementType);
 }
 
 public interface IDamageableElement
 {
-    void TakeDamage(EPhysicalDamageType damageType);
+    void CalculateDamage(EPhysicalDamageType damageType);
 }
 
 public interface IDamageableDamage
 {
-    void TakeDamage(int damage);
+    void CalculateDamage(int damage);
 }
 
-public interface IDamageableHit
+public interface IDamageableHit //Can be used to easily debug 
 {
-    void TakeDamage();
+    void CalculateDamage();
 }
 

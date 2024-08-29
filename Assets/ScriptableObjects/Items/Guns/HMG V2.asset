@@ -38,5 +38,8 @@ MonoBehaviour:
   magazineSize: 350
   magsStored: 12
   weaponType: 6
-  currentAmmo: 244
-  currentMags: 11
+  physicalType: 0
+  elementType: 0
+  projectilePrefab: {fileID: 8659441889846465044, guid: b925ef453f4492747884d26c87fe0861, type: 3}
+  currentAmmo: 350
+  currentMags: 12

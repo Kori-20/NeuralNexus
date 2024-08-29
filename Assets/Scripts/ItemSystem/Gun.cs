@@ -6,7 +6,7 @@ using UnityEngine;
 public class Gun : Equipment
 {
     [Header("Guns")]
-    [SerializeField] private float damage = 10;
+    [SerializeField] public float damage = 10;
     [SerializeField] public float fireRate = 2;
     [SerializeField] private float range;
     [SerializeField] public float accuracy = 70;
@@ -19,7 +19,12 @@ public class Gun : Equipment
     [SerializeField] public int magazineSize = 20;
     [SerializeField] public int magsStored = 22;
 
-    [SerializeField] private EWeaponType weaponType;
+    [SerializeField] public EWeaponType weaponType;
+    [SerializeField] public EPhysicalDamageType physicalType;
+    [SerializeField] public EElementalDamageType elementType;
+  
+
+    [SerializeField] public GameObject projectilePrefab;
 
     [Header("Changeable Stats")]
     [SerializeField] public int currentAmmo;

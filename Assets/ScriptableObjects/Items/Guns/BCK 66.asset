@@ -37,6 +37,9 @@ MonoBehaviour:
   reloadTime: 2.2
   magazineSize: 20
   magsStored: 1
-  weaponType: 14
+  weaponType: 8
+  physicalType: 0
+  elementType: 0
+  projectilePrefab: {fileID: 8659441889846465044, guid: b925ef453f4492747884d26c87fe0861, type: 3}
   currentAmmo: 20
   currentMags: 1

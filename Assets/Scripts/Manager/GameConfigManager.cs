@@ -78,11 +78,18 @@ public enum EPhysicalDamageType
 
 public enum EElementalDamageType
 {
+    Neutral,
     Crystal,
     Radiation,
     Magma,
     Plasma,
     Sound,
     Void,
-    Neutral,
+}
+
+public enum EDefenseStats
+{
+    Health,
+    Armor,
+    Shield,
 }
