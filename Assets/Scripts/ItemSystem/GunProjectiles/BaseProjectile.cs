@@ -17,14 +17,14 @@ public class BaseProjectile : MonoBehaviour
 
 
     //Call Init as bullet is instantiated
-    public void InitProjectile(int bulletDamage, int bulletVelocity, EPhysicalDamageType physicalType, EElementalDamageType elementalType, Vector3 bulletDirection)
+    public void InitProjectile(int bulletDamage, int bulletVelocity, EPhysicalDamageType physicalType, EElementalDamageType elementalType, Vector3 bulletDir)
     {
         hitBox = GetComponent<SphereCollider>(); //Check for errors
         damage = bulletDamage;
         speed = bulletVelocity;
         physical = physicalType;
         element = elementalType;
-        moveDir = bulletDirection;
+        moveDir = bulletDir;
     }
 
     //Move bullet
@@ -58,8 +58,6 @@ public class BaseProjectile : MonoBehaviour
             Debug.Log("No Damageable Interface Found");
         }
 
-        // Destroy the projectile after handling damage
-        Debug.Log("Projectile" + name + "Destroyed");
-        Destroy(gameObject);
+        ProjectileManager.Instance.RemoveFromPool(gameObject);
     }
 }

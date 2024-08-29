@@ -6,10 +6,11 @@ using UnityEngine;
 public class Gun : Equipment
 {
     [Header("Guns")]
-    [SerializeField] public float damage = 10;
+    [SerializeField] public int damage = 10;
     [SerializeField] public float fireRate = 2;
-    [SerializeField] private float range;
-    [SerializeField] public float accuracy = 70;
+    [SerializeField] private int range;
+    [SerializeField] public int accuracy = 70;
+    [SerializeField] public int velocity = 50;
     [SerializeField] public float recoil = 0.1f;
     [SerializeField] public int pelletsPerShot = 1;
 
