@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, IDamageable
@@ -10,6 +11,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private EElementalDamageType myEnemyElement;
     private SpriteRenderer sprite;
     private Color spriteColor;
+    private Coroutine flashCr = null;
 
     private void OnValidate()
     {
@@ -26,7 +28,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     void IDamageable.CalculateDamage(int damage, EPhysicalDamageType physicalType, EElementalDamageType elementType)
     {
         int calcDmg = damage;
-        calcDmg = (int)ElementMath(calcDmg, elementType);
+        calcDmg = (int)ElementMath(calcDmg, elementType);//Damage change based on element
 
         if (shield > 0)
         {

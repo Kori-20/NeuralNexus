@@ -51,7 +51,7 @@ public class ProjectileManager : MonoBehaviour
         else if (enemyProjectileList.Contains(projectile)) enemyProjectileList.Remove(projectile);
         else 
         { 
-            Debug.LogError("Projectile not found in pool"); 
+            Debug.LogWarning("Projectile not found in pool"); 
         }
         Destroy(projectile);
     }

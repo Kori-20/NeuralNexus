@@ -109,8 +109,7 @@ public class GunBehaviour : MonoBehaviour
         Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
         Vector3 spreadDirection = spreadRotation * targetPoint;
 
-        Debug.DrawRay(shootPoint.position, spreadDirection * rayCastDistance, Color.magenta, 1f);
-
+        //Debug.DrawRay(shootPoint.position, spreadDirection * rayCastDistance, Color.magenta, 1f); //True bulet trajectory
         return spreadDirection.normalized;
     }
 
