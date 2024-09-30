@@ -118,3 +118,10 @@ public enum EDefenseStats
     Shield,
     ArmoredHealth,
 }
+
+public enum EVFXClassification
+{
+    PermaFX,
+    EnemyFX,
+    PlayerFX
+}

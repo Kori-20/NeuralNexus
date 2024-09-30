@@ -27,6 +27,7 @@ public class ProjectileManager : MonoBehaviour
         activeBullet.transform.forward = direction.normalized;
         activeBullet.GetComponent<BaseProjectile>().InitProjectile(damage, velocity, physicalType, elementType, activeBullet.transform.forward);
         AddToProjectilePool(activeBullet, EProjectileType.Player);
+        
     }
 
 
