@@ -28,6 +28,9 @@ public class InGameUiManager : MonoBehaviour
     private Coroutine reloadFillCoroutine = null;
     [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
+    [Header("Floating Damage Numbers")]
+    [SerializeField] private GameObject floatingNumbersPrefab;
+
 
     private void Awake()
     {
@@ -153,5 +156,14 @@ public class InGameUiManager : MonoBehaviour
             pauseMenu.SetActive(true);
             return true;
         }
+    }
+
+    public void SpawnFloatingNumbers(Vector3 enemyPosition, int damage, Quaternion enemyQuat, Color rgb, GameObject parent)
+    {
+        GameObject floatingNumbers = Instantiate(floatingNumbersPrefab, enemyPosition, enemyQuat);        
+        floatingNumbers.transform.SetParent(parent.transform);
+        TextMeshPro textAsset = floatingNumbers.GetComponent<TextMeshPro>();
+        textAsset.text = damage.ToString();
+        textAsset.color = rgb;
     }
 }

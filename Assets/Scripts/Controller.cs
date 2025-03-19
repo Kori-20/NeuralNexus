@@ -50,11 +50,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private float coverSpeed = 5f;
     private bool inTransit = false;
 
-    private void Awake()
-    {
-
-    }
-
     private void OnEnable()
     {
         playerInput.enabled = true;
@@ -70,11 +65,15 @@ public class Controller : MonoBehaviour
         InputSetup();
         transform.position = CoverManager.Instance.GetCoverCenter();
 
-        gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
-        InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
-        InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
-            missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
-            missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+        if (missionGear.GetGunInSlot(currentWeaponSlot)){
+            gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
+            InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
+            InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
+                missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
+                missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+        }
+        else Debug.LogWarning("No guns equipped");
+
 
         crosshairColor = crosshair.color;
 
@@ -161,7 +160,7 @@ public class Controller : MonoBehaviour
 
     public void StartShooting()
     {
-        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC)
+        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot))
         {
             gunBehave.Shoot();
         }
@@ -320,10 +319,6 @@ public class Controller : MonoBehaviour
 
             case EPlayerMotion.Shoot:
                 playerSprite.sprite = shootingSprite;
-                break;
-
-            case EPlayerMotion.Transit:
-                //No transit animation for now
                 break;
 
             default:

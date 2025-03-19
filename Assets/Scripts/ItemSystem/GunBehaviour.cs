@@ -4,7 +4,7 @@ using UnityEngine;
 public class GunBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform shootPoint;
-    private float rayCastDistance = 300f;
+    //private float rayCastDistance = 300f;
     private float spreadMath;
 
     private Gun currentGun = null; //Value set by player Controller on weapon switch

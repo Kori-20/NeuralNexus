@@ -6,18 +6,19 @@ public class DamageModifier : MonoBehaviour
     public static readonly Dictionary<(EPhysicalDamageType, EDefenseStats), float> PhysicalDamageMultiplier = new Dictionary<(EPhysicalDamageType, EDefenseStats), float>()
     {
         {(EPhysicalDamageType.Blunt,EDefenseStats.Shield), 0.5f},
-        {(EPhysicalDamageType.Blunt,EDefenseStats.Armor), 0.0f},
+        {(EPhysicalDamageType.Blunt,EDefenseStats.Armor), 0.1f},
         {(EPhysicalDamageType.Blunt,EDefenseStats.Health), 1.2f},
         {(EPhysicalDamageType.Blunt,EDefenseStats.ArmoredHealth), 0.5f},
 
         {(EPhysicalDamageType.Piercing,EDefenseStats.Shield), 0.5f},
         {(EPhysicalDamageType.Piercing,EDefenseStats.Armor), 1.5f},
+        {(EPhysicalDamageType.Piercing,EDefenseStats.ArmoredHealth), 0.8f},
 
         {(EPhysicalDamageType.Explosive,EDefenseStats.Shield), 0.75f},
         {(EPhysicalDamageType.Explosive,EDefenseStats.ArmoredHealth), 0.75f},
 
         {(EPhysicalDamageType.Energetic,EDefenseStats.Shield), 1.5f},
-        {(EPhysicalDamageType.Energetic,EDefenseStats.Armor), 0.0f},
+        {(EPhysicalDamageType.Energetic,EDefenseStats.Armor), 0.2f},
         {(EPhysicalDamageType.Energetic,EDefenseStats.ArmoredHealth), .5f},
     };
 

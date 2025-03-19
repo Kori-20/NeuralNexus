@@ -20,6 +20,10 @@ public class Item : ScriptableObject
 
     private void OnValidate()
     {
-        if(FindAnyObjectByType<GameConfigManager>()) rarityColor = FindAnyObjectByType<GameConfigManager>().GetRarityColor(rarity);
+        GameConfigManager gameConfigManager = GameConfigManager.Instance;
+        if (gameConfigManager)
+        {
+            rarityColor = gameConfigManager.GetRarityColor(rarity);
+        }
     }
 }

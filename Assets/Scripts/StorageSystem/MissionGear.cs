@@ -5,13 +5,13 @@ public class MissionGear : MonoBehaviour
 {
     //TODO: remove serielizefield from individual slots
     [Header("Guns")]
-    [SerializeField] private Gun[] gunSlots;
+    private Gun[] gunSlots;
     [SerializeField] private Gun weapon1;
     [SerializeField] private Gun weapon2;
     [SerializeField] private Gun backupWeapon;
 
     [Header("Armor")]
-    [SerializeField] private Armor[] armorSlots;
+    private Armor[] armorSlots;
     [SerializeField] private Armor helmet;
     [SerializeField] private Armor vest;
     [SerializeField] private Armor gloves;
@@ -20,7 +20,7 @@ public class MissionGear : MonoBehaviour
     [SerializeField] private Armor boots;
 
     [Header("Abilities")]
-    [SerializeField] private Ability[] abilitySlots;
+    private Ability[] abilitySlots;
     [SerializeField] private Ability ability01;
     [SerializeField] private Ability ability02;
     [SerializeField] private Ability ability03;
