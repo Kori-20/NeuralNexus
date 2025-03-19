@@ -1,45 +1,52 @@
-//Base class for all weapons both on player side and for the enemies
-//Exclusivity of weapons is defined by lack of implementation of certain weapons in the player or enemy class
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Equipment/Gun")]
 public class Gun : Equipment
 {
-    [Header("Guns")]
-    [SerializeField] public int damage = 10;
-    [SerializeField] public float fireRate = 2;
-    [SerializeField] private int range;
-    [SerializeField] public int accuracy = 70;
-    [SerializeField] public int velocity = 50;
-    [SerializeField] public float recoil = 0.1f;
-    [SerializeField] public int pelletsPerShot = 1;
+    public int Damage { get; private set; }
+    public float FireRate { get; private set; }
+    public int Range { get; private set; }
+    public int Accuracy { get; private set; }
+    public int Velocity { get; private set; }
+    public float Recoil { get; private set; }
+    public int PelletsPerShot { get; private set; }
+    public bool IsAutomatic { get; private set; }
 
-    [SerializeField] public bool isAutomatic = true;
+    public float ReloadTime { get; private set; }
+    public int MagazineSize { get; private set; }
+    public int MagsStored { get; private set; }
 
-    [SerializeField] public float reloadTime = 1.5f;
-    [SerializeField] public int magazineSize = 20;
-    [SerializeField] public int magsStored = 22;
+    public EWeaponType WeaponType { get; private set; }
+    public EPhysicalDamageType PhysicalType { get; private set; }
+    public EElementalDamageType ElementType { get; private set; }
 
-    [SerializeField] public EWeaponType weaponType;
-    [SerializeField] public EPhysicalDamageType physicalType;
-    [SerializeField] public EElementalDamageType elementType;
-  
+    public int CurrentAmmo { get; private set; }
+    public int CurrentMags { get; private set; }
 
-    [SerializeField] public GameObject projectilePrefab;
-
-    [Header("Changeable Stats")]
-    [SerializeField] public int currentAmmo;
-    [SerializeField] public int currentMags;
-
-    private void OnValidate()
+    public Gun(int id, string name, string description, EItemRarity rarity, Sprite icon,
+               string uniqueEffect, string nonAbbreviatedName, float durability, float maxDurability,
+               int damage, float fireRate, int range, int accuracy, int velocity, float recoil, int pelletsPerShot,
+               bool isAutomatic, float reloadTime, int magazineSize, int magsStored,
+               EWeaponType weaponType, EPhysicalDamageType physicalType, EElementalDamageType elementType)
+        : base(id, name, description, rarity, icon, uniqueEffect, nonAbbreviatedName, durability, maxDurability)
     {
-        currentAmmo = magazineSize;
-        currentMags = magsStored;
-    }
+        Damage = damage;
+        FireRate = fireRate;
+        Range = range;
+        Accuracy = accuracy;
+        Velocity = velocity;
+        Recoil = recoil;
+        PelletsPerShot = pelletsPerShot;
+        IsAutomatic = isAutomatic;
 
-    private void Awake()
-    {
-        currentAmmo = magazineSize;
-        currentMags = magsStored;
+        ReloadTime = reloadTime;
+        MagazineSize = magazineSize;
+        MagsStored = magsStored;
+
+        WeaponType = weaponType;
+        PhysicalType = physicalType;
+        ElementType = elementType;
+
+        CurrentAmmo = magazineSize;
+        CurrentMags = magsStored;
     }
 }

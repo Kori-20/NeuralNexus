@@ -1,29 +1,31 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/DefaultItem")]
-public class Item : ScriptableObject
+public class Item
 {
-    [Header("Item Properties")]
-    [SerializeField] protected string id;
-    [SerializeField] new protected string name;
-    [SerializeField] public Sprite sprite;
-    [SerializeField, TextArea(2, 10)] protected string description;
-    [SerializeField] public EItemRarity rarity;
-    public Color rarityColor;
+    public int ID { get; private set; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
+    public EItemRarity Rarity { get; private set; }
+    public Sprite Sprite { get; private set; }
 
-    [SerializeField] protected int stackSize;
+    public int StackSize { get; private set; }
+    public bool IsStackable { get; private set; }
+    public bool IsEquippable { get; private set; }
+    public bool IsDiscardable { get; private set; }
+    public bool IsConsumable { get; private set; }
 
-    [SerializeField] protected bool isStackable;
-    [SerializeField] protected bool isEquippable;
-    [SerializeField] protected bool isDiscardable;
-    [SerializeField] protected bool isConsumable;
-
-    private void OnValidate()
+    public Item(int id, string name, string description, EItemRarity rarity, Sprite icon,
+                    int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable)
     {
-        GameConfigManager gameConfigManager = GameConfigManager.Instance;
-        if (gameConfigManager)
-        {
-            rarityColor = gameConfigManager.GetRarityColor(rarity);
-        }
+        ID = id;
+        Name = name;
+        Description = description;
+        Rarity = rarity;
+        Sprite = icon;
+        StackSize = stackSize;
+        IsStackable = isStackable;
+        IsEquippable = isEquippable;
+        IsDiscardable = isDiscardable;
+        IsConsumable = isConsumable;
     }
 }

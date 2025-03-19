@@ -1,12 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Consumable")]
 public class Consumable : Item
 {
-    protected int numberOfUses;
-
-    protected virtual void Consume()
+    // Constructor that passes all parameters to the base class constructor
+    public Consumable(int id, string name, string description, EItemRarity rarity, Sprite icon,
+                       int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable)
+        : base(id, name, description, rarity, icon, stackSize, isStackable, isEquippable, isDiscardable, isConsumable)
     {
-         
     }
 }
