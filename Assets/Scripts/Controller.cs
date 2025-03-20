@@ -65,12 +65,12 @@ public class Controller : MonoBehaviour
         InputSetup();
         transform.position = CoverManager.Instance.GetCoverCenter();
 
-        if (missionGear.GetGunInSlot(currentWeaponSlot)){
+        if (missionGear.GetGunInSlot(currentWeaponSlot) != null){
             gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
             InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
             InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
-                missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
-                missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo,
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentMags);
         }
         else Debug.LogWarning("No guns equipped");
 
@@ -160,7 +160,7 @@ public class Controller : MonoBehaviour
 
     public void StartShooting()
     {
-        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot))
+        if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot) != null)
         {
             gunBehave.Shoot();
         }
@@ -228,8 +228,8 @@ public class Controller : MonoBehaviour
                 //Animate the new weapon slot
                 InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
                 InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
-                missionGear.GetGunInSlot(currentWeaponSlot).currentAmmo,
-                missionGear.GetGunInSlot(currentWeaponSlot).currentMags);
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo,
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentMags);
 
                 gunBehave.AmmoCheck();
                 //Debug.Log("Switch#0" + currentWeaponSlot + "##" + missionGear.GetGunInSlot(currentWeaponSlot).name); return;

@@ -30,7 +30,7 @@ public class GunBehaviour : MonoBehaviour
     {
             playerControl.SetCanFire(false);
 
-            if (currentGun.isAutomatic)
+            if (currentGun.IsAutomatic)
             {
                 if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
             }
@@ -65,7 +65,7 @@ public class GunBehaviour : MonoBehaviour
             }
             else
             {
-                if (currentGun.currentAmmo > 0 && !playerControl.GetTransitStatus())
+                if (currentGun.CurrentAmmo > 0 && !playerControl.GetTransitStatus())
                 {
                     FireBullet(directionToHitPoint);
                 }
@@ -83,22 +83,22 @@ public class GunBehaviour : MonoBehaviour
         playerControl.ChangeSprite(EPlayerMotion.Shoot);
         playerControl.PlayerRecoil();
 
-        for (int i = 0; i < currentGun.pelletsPerShot; i++)
+        for (int i = 0; i < currentGun.PelletsPerShot; i++)
         {
             Vector3 spreadDirection = BulletSpread(direction);
             SpawnWeaponProjetile(spreadDirection);
         }
 
-        currentGun.currentAmmo--;
-        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.currentAmmo, currentGun.currentMags);
-        if (currentGun.currentAmmo <= 0) Reload();
+        ////currentGun.CurrentAmmo--;
+        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
+        if (currentGun.CurrentAmmo <= 0) Reload();
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
     {
-        ProjectileManager.Instance.SpawnProjectile(currentGun.projectilePrefab, shootPoint.position, directionPostSpread,
-            (int)currentGun.damage, currentGun.velocity, currentGun.physicalType,
-            currentGun.elementType);
+        ////ProjectileManager.Instance.SpawnProjectile(currentGun.projectilePrefab, shootPoint.position, directionPostSpread,
+        ////    (int)currentGun.Damage, currentGun.Velocity, currentGun.PhysicalType,
+        ////    currentGun.ElementType);
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)
@@ -116,14 +116,14 @@ public class GunBehaviour : MonoBehaviour
     public void Reload()
     {
         //Loses remaining ammo in the magazine On Reload
-        if(currentGun.currentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.currentAmmo < currentGun.magazineSize && Time.timeScale != 0)
+        if(currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
         {
             Debug.Log("Reloading...");
             playerControl.ChangeSprite(EPlayerMotion.Cover);
             reloadCoroutine = StartCoroutine(ReloadCoroutine());
-            InGameUiManager.Instance.FillReload(currentGun.reloadTime);
+            InGameUiManager.Instance.FillReload(currentGun.ReloadTime);
         }
-        else if (currentGun.currentMags <= 0)
+        else if (currentGun.CurrentMags <= 0)
         {
             Debug.Log("No magazines left.");
         }
@@ -146,14 +146,14 @@ public class GunBehaviour : MonoBehaviour
 
     private IEnumerator ReloadCoroutine()
     {
-        yield return new WaitForSeconds(currentGun.reloadTime);
+        yield return new WaitForSeconds(currentGun.ReloadTime);
         reloadCoroutine = null;
         if (currentGun != null)
         {
-            Debug.Log("Reloaded " + currentGun.magazineSize + " bullets");
-            currentGun.currentMags--;
-            currentGun.currentAmmo = currentGun.magazineSize;
-            InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.currentAmmo, currentGun.currentMags);
+            Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
+            ////currentGun.CurrentMags--;
+            ////currentGun.CurrentAmmo = currentGun.MagazineSize;
+            InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
         }
     }
 
@@ -174,13 +174,13 @@ public class GunBehaviour : MonoBehaviour
         while (true)
         {
             Trajectory();
-            yield return new WaitForSeconds(1f / currentGun.fireRate); // Wait for the cooldown period
+            yield return new WaitForSeconds(1f / currentGun.FireRate); // Wait for the cooldown period
         }
     }
 
     private IEnumerator DelayFire() //Forces non automatic weapons to follow their fire rate
     {
-        yield return new WaitForSeconds(1f / currentGun.fireRate);
+        yield return new WaitForSeconds(1f / currentGun.FireRate);
         playerControl.SetCanFire(true);
         Debug.Log("Can Fire");
         delayFireC = null; // Reset the coroutine reference
@@ -191,7 +191,7 @@ public class GunBehaviour : MonoBehaviour
     {
             StopShooting();
             currentGun = gun;
-            spreadMath = spreadCurve.Evaluate(currentGun.accuracy)*25;
+            spreadMath = spreadCurve.Evaluate(currentGun.Accuracy)*25;
     }
 
     public void SetGunIndex(int index)
@@ -201,6 +201,6 @@ public class GunBehaviour : MonoBehaviour
 
     public void AmmoCheck()
     {
-          if (currentGun.currentAmmo <= 0) Reload();
+          if (currentGun.CurrentAmmo <= 0) Reload();
     }
 }

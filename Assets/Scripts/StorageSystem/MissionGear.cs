@@ -59,9 +59,9 @@ public class MissionGear : MonoBehaviour
     private void SetUi()
     {
         ///Change the color 
-        if (weapon1 != null) InGameUiManager.Instance.SyncGunIcons(0, weapon1.sprite, Color.blue);
-        if (weapon2 != null) InGameUiManager.Instance.SyncGunIcons(1, weapon2.sprite, Color.blue);
-        if (backupWeapon != null) InGameUiManager.Instance.SyncGunIcons(2, backupWeapon.sprite, Color.blue);
+        if (weapon1 != null) InGameUiManager.Instance.SyncGunIcons(0, weapon1.Icon, Color.blue);
+        if (weapon2 != null) InGameUiManager.Instance.SyncGunIcons(1, weapon2.Icon, Color.blue);
+        if (backupWeapon != null) InGameUiManager.Instance.SyncGunIcons(2, backupWeapon.Icon, Color.blue);
     }
 
     private void OnMissionStart()

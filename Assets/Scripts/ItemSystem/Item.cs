@@ -6,7 +6,7 @@ public class Item
     public string Name { get; private set; }
     public string Description { get; private set; }
     public EItemRarity Rarity { get; private set; }
-    public Sprite Sprite { get; private set; }
+    public Sprite Icon { get; private set; }
 
     public int StackSize { get; private set; }
     public bool IsStackable { get; private set; }
@@ -21,7 +21,7 @@ public class Item
         Name = name;
         Description = description;
         Rarity = rarity;
-        Sprite = icon;
+        Icon = icon;
         StackSize = stackSize;
         IsStackable = isStackable;
         IsEquippable = isEquippable;
