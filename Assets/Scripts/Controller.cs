@@ -69,8 +69,7 @@ public class Controller : MonoBehaviour
             gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
             InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
             InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
-                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo,
-                missionGear.GetGunInSlot(currentWeaponSlot).CurrentMags);
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo);
         }
         else Debug.LogWarning("No guns equipped");
 
@@ -228,8 +227,7 @@ public class Controller : MonoBehaviour
                 //Animate the new weapon slot
                 InGameUiManager.Instance.AnimateGunSlots(false, currentWeaponSlot);
                 InGameUiManager.Instance.SyncAmmo(currentWeaponSlot,
-                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo,
-                missionGear.GetGunInSlot(currentWeaponSlot).CurrentMags);
+                missionGear.GetGunInSlot(currentWeaponSlot).CurrentAmmo);
 
                 gunBehave.AmmoCheck();
                 //Debug.Log("Switch#0" + currentWeaponSlot + "##" + missionGear.GetGunInSlot(currentWeaponSlot).name); return;

@@ -30,14 +30,14 @@ public class GunBehaviour : MonoBehaviour
     {
             playerControl.SetCanFire(false);
 
-            if (currentGun.IsAutomatic)
-            {
-                if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
-            }
-            else
-            {
-                Trajectory();
-            }
+            ////if (currentGun.IsAutomatic)
+            ////{
+            ////    if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
+            ////}
+            ////else
+            ////{
+            ////    Trajectory();
+            ////}
             
             if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
@@ -83,14 +83,14 @@ public class GunBehaviour : MonoBehaviour
         playerControl.ChangeSprite(EPlayerMotion.Shoot);
         playerControl.PlayerRecoil();
 
-        for (int i = 0; i < currentGun.PelletsPerShot; i++)
-        {
-            Vector3 spreadDirection = BulletSpread(direction);
-            SpawnWeaponProjetile(spreadDirection);
-        }
+        ////for (int i = 0; i < currentGun.PelletsPerShot; i++)
+        ////{
+        ////    Vector3 spreadDirection = BulletSpread(direction);
+        ////    SpawnWeaponProjetile(spreadDirection);
+        ////}
 
         ////currentGun.CurrentAmmo--;
-        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
+        ////InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
         if (currentGun.CurrentAmmo <= 0) Reload();
     }
 
@@ -116,17 +116,17 @@ public class GunBehaviour : MonoBehaviour
     public void Reload()
     {
         //Loses remaining ammo in the magazine On Reload
-        if(currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
-        {
-            Debug.Log("Reloading...");
-            playerControl.ChangeSprite(EPlayerMotion.Cover);
-            reloadCoroutine = StartCoroutine(ReloadCoroutine());
-            InGameUiManager.Instance.FillReload(currentGun.ReloadTime);
-        }
-        else if (currentGun.CurrentMags <= 0)
-        {
-            Debug.Log("No magazines left.");
-        }
+        ////if(currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
+        ////{
+        ////    Debug.Log("Reloading...");
+        ////    playerControl.ChangeSprite(EPlayerMotion.Cover);
+        ////    reloadCoroutine = StartCoroutine(ReloadCoroutine());
+        ////    InGameUiManager.Instance.FillReload(currentGun.ReloadTime);
+        ////}
+        ////else if (currentGun.CurrentMags <= 0)
+        ////{
+        ////    Debug.Log("No magazines left.");
+        ////}
     }
 
     public void StopReload()
@@ -144,18 +144,18 @@ public class GunBehaviour : MonoBehaviour
         //Degub.Log("Aiming Down Sights");
     }
 
-    private IEnumerator ReloadCoroutine()
-    {
-        yield return new WaitForSeconds(currentGun.ReloadTime);
-        reloadCoroutine = null;
-        if (currentGun != null)
-        {
-            Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
-            ////currentGun.CurrentMags--;
-            ////currentGun.CurrentAmmo = currentGun.MagazineSize;
-            InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
-        }
-    }
+    ////private IEnumerator ReloadCoroutine()
+    ////{
+    ////    yield return new WaitForSeconds(currentGun.ReloadTime);
+    ////    reloadCoroutine = null;
+    ////    if (currentGun != null)
+    ////    {
+    ////        Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
+    ////        ////currentGun.CurrentMags--;
+    ////        ////currentGun.CurrentAmmo = currentGun.MagazineSize;
+    ////        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
+    ////    }
+    ////}
 
     private Vector3 CrosshairAim()
     {

@@ -56,10 +56,9 @@ public class InGameUiManager : MonoBehaviour
 
     }
 
-    public void SyncAmmo(int gunIndex, int ammo, int mags)
+    public void SyncAmmo(int gunIndex, int ammo)
     {
         ammoAmmount.text = ammo.ToString();
-        magAmmount.text = mags.ToString();
         //Debug.Log("Synced Gun: " + gunIndex + " Ammo: " + ammo + " Mags: " + mags);   
     }
 

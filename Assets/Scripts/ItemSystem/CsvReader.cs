@@ -47,27 +47,15 @@ public static class CSVReader
         return new Gun(
             id: int.Parse(data[0]),
             name: data[1],
-            description: data[2],
-            rarity: (EItemRarity)Enum.Parse(typeof(EItemRarity), data[3]),
-            icon: LoadSprite(data[4]),
-            uniqueEffect: data[5],
-            nonAbbreviatedName: data[6],
-            durability: float.Parse(data[7]),
-            maxDurability: float.Parse(data[8]),
-            damage: int.Parse(data[9]),
-            fireRate: float.Parse(data[10]),
-            range: int.Parse(data[11]),
-            accuracy: int.Parse(data[12]),
-            velocity: int.Parse(data[13]),
-            recoil: float.Parse(data[14]),
-            pelletsPerShot: int.Parse(data[15]),
-            isAutomatic: bool.Parse(data[16]),
-            reloadTime: float.Parse(data[17]),
-            magazineSize: int.Parse(data[18]),
-            magsStored: int.Parse(data[19]),
-            weaponType: (EWeaponType)Enum.Parse(typeof(EWeaponType), data[20]),
-            physicalType: (EPhysicalDamageType)Enum.Parse(typeof(EPhysicalDamageType), data[21]),
-            elementType: (EElementalDamageType)Enum.Parse(typeof(EElementalDamageType), data[22])
+            fullname: data[2],
+            icon: LoadSprite(data[3]),
+            description: data[4],            
+            damage: int.Parse(data[5]),
+            fireRate: float.Parse(data[6]),
+            magazineSize: int.Parse(data[7]),
+            accuracy: int.Parse(data[8]),
+            reloadSpeed: float.Parse(data[9]),
+            type: (EWeaponType)Enum.Parse(typeof(EWeaponType), data[10])
         );
     }
 
