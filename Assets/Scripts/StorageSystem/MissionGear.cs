@@ -56,6 +56,28 @@ public class MissionGear : MonoBehaviour
         abilitySlots[2] = ability03;
     }
 
+
+    private Gun GetAndCastGun(int itemID)
+    {
+        
+        Item item = CSVReader.GetItem(0); // Assuming this returns an Item
+        if (item is Gun)
+        {
+            Gun gun = item as Gun;
+            // Successfully cast to Gun
+            Debug.Log("Successfully cast to Gun: " + gun.FullName);
+            Debug.Log("Name: " + gun.Name + " ID: " + gun.ID + " Desc: " + gun.Description + " FireRate: " + gun.FireRate);
+            return gun;
+        }
+        else
+        {
+            // The item is not a Gun
+            Debug.Log("The item is not a Gun.");
+            Debug.Log("Name: " + item.Name + " ID: " + item.ID + " Desc: " + item.Description);
+            return null;
+        }
+    }
+
     private void SetUi()
     {
         ///Change the color 

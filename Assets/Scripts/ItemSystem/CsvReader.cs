@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public static class CSVReader
@@ -9,7 +10,7 @@ public static class CSVReader
 
     public static void LoadAllCSVData()
     {
-        LoadItems("Guns.csv", ParseGun);
+        LoadItems("NeuralNexus - Guns.csv", ParseGun);
         //LoadItems("Armor.csv", ParseArmor);
         //LoadItems("Consumables.csv", ParseConsumable);
         //LoadItems("QuestItems.csv", ParseQuestItem);
