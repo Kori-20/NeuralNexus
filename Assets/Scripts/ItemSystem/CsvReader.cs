@@ -6,7 +6,8 @@ using UnityEngine;
 
 public static class CSVReader
 {
-    private static Dictionary<int, Item> itemDictionary = new Dictionary<int, Item>();
+    //public to allow DictionaryViewer to access it easily
+    public static Dictionary<int, Item> itemDictionary = new Dictionary<int, Item>();
 
     public static void LoadAllCSVData()
     {

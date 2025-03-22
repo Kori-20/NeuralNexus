@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,6 +28,9 @@ public class MissionGear : MonoBehaviour
 
     private void Awake()
     {
+        //Load all CSV data on game awake for now
+        //TODO: Make data load persistent so that it only loads once every update
+        CSVReader.LoadAllCSVData();
         SetSlotRefs();
     }
 
@@ -37,6 +41,11 @@ public class MissionGear : MonoBehaviour
 
     private void SetSlotRefs()
     {
+        
+        weapon1 = GetAndCastGun(0);
+        weapon2 = GetAndCastGun(1);
+        backupWeapon = GetAndCastGun(2);
+
         gunSlots = new Gun[3];
         gunSlots[0] = weapon1;
         gunSlots[1] = weapon2;
@@ -59,24 +68,30 @@ public class MissionGear : MonoBehaviour
 
     private Gun GetAndCastGun(int itemID)
     {
-        
-        Item item = CSVReader.GetItem(0); // Assuming this returns an Item
-        if (item is Gun)
+        Item item = CSVReader.GetItem(itemID) ?? throw new ArgumentNullException(nameof(itemID), $"No item found with ID {itemID}.");
+
+        if (item is Gun originalGun)
         {
-            Gun gun = item as Gun;
-            // Successfully cast to Gun
-            Debug.Log("Successfully cast to Gun: " + gun.FullName);
-            Debug.Log("Name: " + gun.Name + " ID: " + gun.ID + " Desc: " + gun.Description + " FireRate: " + gun.FireRate);
-            return gun;
+            return new Gun(
+                originalGun.ID,
+                originalGun.Name,
+                originalGun.FullName,
+                originalGun.Icon,
+                originalGun.Description,
+                originalGun.Damage,
+                originalGun.FireRate,
+                originalGun.MagazineSize,
+                originalGun.Accuracy,
+                originalGun.ReloadSpeed,
+                originalGun.WeaponType
+            );
         }
-        else
-        {
-            // The item is not a Gun
-            Debug.Log("The item is not a Gun.");
-            Debug.Log("Name: " + item.Name + " ID: " + item.ID + " Desc: " + item.Description);
-            return null;
-        }
+
+        Debug.LogWarning($"The item with ID {itemID} is not a Gun. It is a {item.GetType().Name}.");
+        return null;
     }
+
+
 
     private void SetUi()
     {

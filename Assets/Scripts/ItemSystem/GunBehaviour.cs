@@ -19,6 +19,10 @@ public class GunBehaviour : MonoBehaviour
     [Header("Base Gun Property")]
     [SerializeField] private AnimationCurve spreadCurve;
 
+    [Header("Tempo Fix Variables")]
+    [SerializeField] private GameObject tempo_bulletPrefab;
+    [SerializeField] private EPhysicalDamageType tempo_physicalType;
+    [SerializeField] private EElementalDamageType tempo_elementType;
 
     private void Awake()
     {
@@ -30,16 +34,20 @@ public class GunBehaviour : MonoBehaviour
     {
             playerControl.SetCanFire(false);
 
-            ////if (currentGun.IsAutomatic)
-            ////{
-            ////    if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
-            ////}
-            ////else
-            ////{
-            ////    Trajectory();
-            ////}
-            
-            if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
+        //if (currentGun.IsAutomatic)
+        //{
+        //    if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
+        //}
+        //else
+        //{
+        //    Trajectory();
+        //}
+
+        ////Assuming all guns are automatic until auto & semi-auto have been resolved
+        if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
+
+
+        if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
 
     public void StopShooting()
@@ -83,22 +91,29 @@ public class GunBehaviour : MonoBehaviour
         playerControl.ChangeSprite(EPlayerMotion.Shoot);
         playerControl.PlayerRecoil();
 
-        ////for (int i = 0; i < currentGun.PelletsPerShot; i++)
-        ////{
-        ////    Vector3 spreadDirection = BulletSpread(direction);
-        ////    SpawnWeaponProjetile(spreadDirection);
-        ////}
+        for (int i = 0; i < 1 /*///currentGun.PelletsPerShot///*/; i++)
+        {
+            Vector3 spreadDirection = BulletSpread(direction);
+            SpawnWeaponProjetile(spreadDirection);
+        }
 
         ////currentGun.CurrentAmmo--;
-        ////InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
+        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
         if (currentGun.CurrentAmmo <= 0) Reload();
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
     {
-        ////ProjectileManager.Instance.SpawnProjectile(currentGun.projectilePrefab, shootPoint.position, directionPostSpread,
-        ////    (int)currentGun.Damage, currentGun.Velocity, currentGun.PhysicalType,
-        ////    currentGun.ElementType);
+        //ProjectileManager.Instance.SpawnProjectile(currentGun.projectilePrefab, shootPoint.position, directionPostSpread,
+        //    (int)currentGun.Damage, currentGun.Velocity, currentGun.PhysicalType,
+        //    currentGun.ElementType);
+
+        ////Elemental types, bullet prefabs and physical types have not been added to weapon data tables yet NOR VELOCITY 
+        ////Elemental and Physical types are yet to be decided if they should be randomized on weapon generation or predetermined in data tables
+        ////Prefab will be dependant on weapon type
+        ProjectileManager.Instance.SpawnProjectile(tempo_bulletPrefab, shootPoint.position, directionPostSpread,
+            (int)currentGun.Damage, 100, tempo_physicalType,
+            tempo_elementType);
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)
@@ -116,17 +131,26 @@ public class GunBehaviour : MonoBehaviour
     public void Reload()
     {
         //Loses remaining ammo in the magazine On Reload
-        ////if(currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
-        ////{
-        ////    Debug.Log("Reloading...");
-        ////    playerControl.ChangeSprite(EPlayerMotion.Cover);
-        ////    reloadCoroutine = StartCoroutine(ReloadCoroutine());
-        ////    InGameUiManager.Instance.FillReload(currentGun.ReloadTime);
-        ////}
-        ////else if (currentGun.CurrentMags <= 0)
-        ////{
-        ////    Debug.Log("No magazines left.");
-        ////}
+        //if (currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
+        //{
+        //    Debug.Log("Reloading...");
+        //    playerControl.ChangeSprite(EPlayerMotion.Cover);
+        //    reloadCoroutine = StartCoroutine(ReloadCoroutine());
+        //    InGameUiManager.Instance.FillReload(currentGun.ReloadSpeed);
+        //}
+        //else if (currentGun.CurrentMags <= 0)
+        //{
+        //    Debug.Log("No magazines left.");
+        //}
+
+        ////Current mags condition removed, weapons will not have limited magazines
+        if (reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
+        {
+            Debug.Log("Reloading...");
+            playerControl.ChangeSprite(EPlayerMotion.Cover);
+            reloadCoroutine = StartCoroutine(ReloadCoroutine());
+            InGameUiManager.Instance.FillReload(currentGun.ReloadSpeed);
+        }
     }
 
     public void StopReload()
@@ -144,18 +168,17 @@ public class GunBehaviour : MonoBehaviour
         //Degub.Log("Aiming Down Sights");
     }
 
-    ////private IEnumerator ReloadCoroutine()
-    ////{
-    ////    yield return new WaitForSeconds(currentGun.ReloadTime);
-    ////    reloadCoroutine = null;
-    ////    if (currentGun != null)
-    ////    {
-    ////        Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
-    ////        ////currentGun.CurrentMags--;
-    ////        ////currentGun.CurrentAmmo = currentGun.MagazineSize;
-    ////        InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo, currentGun.CurrentMags);
-    ////    }
-    ////}
+    private IEnumerator ReloadCoroutine()
+    {
+        yield return new WaitForSeconds(currentGun.ReloadSpeed);
+        reloadCoroutine = null;
+        if (currentGun != null)
+        {
+            Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
+            ////currentGun.CurrentAmmo = currentGun.MagazineSize;
+            InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
+        }
+    }
 
     private Vector3 CrosshairAim()
     {

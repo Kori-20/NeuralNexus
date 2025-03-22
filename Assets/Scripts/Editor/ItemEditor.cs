@@ -6,7 +6,7 @@ public class ItemEditor : EditorWindow
 
     private int customID = 0;
 
-    [MenuItem("Tools/CSV Reader")]
+    [MenuItem("Neural Nexus/CSV Reader")]
     public static void ShowWindow()
     {
         GetWindow<ItemEditor>("CSV Reader");
