@@ -113,7 +113,7 @@ public class GunBehaviour : MonoBehaviour
         ////Prefab will be dependant on weapon type
         ProjectileManager.Instance.SpawnProjectile(tempo_bulletPrefab, shootPoint.position, directionPostSpread,
             (int)currentGun.Damage, 100, tempo_physicalType,
-            tempo_elementType);
+            tempo_elementType, EProjectileType.Player);
     }
 
     private Vector3 BulletSpread(Vector3 targetPoint)
