@@ -46,7 +46,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private void GetEnemyColor()
     {
-        sprite.color = GameConfigManager.Instance.GetElementalColor(myEnemyElement);
+        ////Change color using material instead
+        ////sprite.color = GameConfigManager.Instance.GetElementalColor(myEnemyElement);
     }
 
     private void LevelAdaptation()
