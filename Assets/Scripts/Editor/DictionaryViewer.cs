@@ -37,7 +37,7 @@ public class ItemDatabaseWindow : EditorWindow
 
             if (item is Gun gun)
             {
-                EditorGUILayout.LabelField($"Type: {gun.WeaponType} | Damage: {gun.Damage} | Fire Rate: {gun.FireRate}");
+                EditorGUILayout.LabelField($"Type: {gun.WeaponType} | Damage: {gun.Damage} | Fire Rate: {gun.FireRate} | Physical Type: {gun.PhysicalType}");
             }
             else if (item is Armor armor)
             {

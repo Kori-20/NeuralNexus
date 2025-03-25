@@ -57,7 +57,9 @@ public static class CSVReader
             magazineSize: int.Parse(data[7]),
             accuracy: int.Parse(data[8]),
             reloadSpeed: float.Parse(data[9]),
-            type: (EWeaponType)Enum.Parse(typeof(EWeaponType), data[10])
+            type: (EWeaponType)Enum.Parse(typeof(EWeaponType), data[10]),
+            p_type: (EPhysicalDamageType)Enum.Parse(typeof(EPhysicalDamageType), data[11]),
+            isAutomatic: bool.Parse(data[12])
         );
     }
 

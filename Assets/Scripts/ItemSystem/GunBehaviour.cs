@@ -34,18 +34,14 @@ public class GunBehaviour : MonoBehaviour
     {
             playerControl.SetCanFire(false);
 
-        //if (currentGun.IsAutomatic)
-        //{
-        //    if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
-        //}
-        //else
-        //{
-        //    Trajectory();
-        //}
-
-        ////Assuming all guns are automatic until auto & semi-auto have been resolved
-        if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
-
+        if (currentGun.IsAutomatic)
+        {
+            if (autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
+        }
+        else
+        {
+            Trajectory();
+        }
 
         if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
@@ -97,7 +93,7 @@ public class GunBehaviour : MonoBehaviour
             SpawnWeaponProjetile(spreadDirection);
         }
 
-        ////currentGun.CurrentAmmo--;
+        //currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
         if (currentGun.CurrentAmmo <= 0) Reload();
     }

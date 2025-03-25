@@ -83,7 +83,9 @@ public class MissionGear : MonoBehaviour
                 originalGun.MagazineSize,
                 originalGun.Accuracy,
                 originalGun.ReloadSpeed,
-                originalGun.WeaponType
+                originalGun.WeaponType,
+                originalGun.PhysicalType,
+                originalGun.IsAutomatic
             );
         }
 
