@@ -878,8 +878,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7752723513688897330}
   m_LocalRotation: {x: 0, y: -0.70710677, z: -0.70710677, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08}
-  m_LocalScale: {x: 0.015, y: 0.015000002, z: 0.015000002}
+  m_LocalPosition: {x: 0, y: 0, z: 6.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8789278953470499860}
@@ -1042,16 +1042,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.399101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.499999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 107.15713
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1084,7 +1096,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2663ba755c6adea4389c8a53a5e45ea8, type: 2}
+      objectReference: {fileID: 2100000, guid: ed24a4766547dfd4cb6622a58b429ef8, type: 2}
     - target: {fileID: 919132149155446097, guid: 8cdf9ccc7583b72468aeeaf3d5084f12, type: 3}
       propertyPath: m_Name
       value: ExarchonPrototype
@@ -1132,8 +1144,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.06538803, y: 0.05405744, z: 0.04014342}
-  m_Center: {x: 0, y: -0.003066109, z: 0.020071706}
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: 0, y: 0, z: 2.2}
 --- !u!114 &8866406395821002923
 MonoBehaviour:
   m_ObjectHideFlags: 0

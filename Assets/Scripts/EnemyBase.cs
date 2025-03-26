@@ -27,27 +27,11 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private string levelNumber;
     [SerializeField] private TextMeshProUGUI exarchonNamespace;
 
-    private SpriteRenderer sprite;
-    private Color spriteColor;
-
-    private void OnValidate()
-    {
-        sprite = GetComponent<SpriteRenderer>();
-        //sprite.color = FindFirstObjectByType<GameConfigManager>().GetElementalColor(myEnemyElement);
-    }
-
     private void Start()
     {
-        GetEnemyColor();
         initialHealth = health;
         ExarchonNaming();
         LevelAdaptation();
-    }
-
-    private void GetEnemyColor()
-    {
-        ////Change color using material instead
-        ////sprite.color = GameConfigManager.Instance.GetElementalColor(myEnemyElement);
     }
 
     private void LevelAdaptation()

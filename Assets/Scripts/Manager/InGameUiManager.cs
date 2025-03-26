@@ -159,8 +159,7 @@ public class InGameUiManager : MonoBehaviour
 
     public void SpawnFloatingNumbers(Vector3 enemyPosition, int damage, Quaternion enemyQuat, Color rgb, GameObject parent)
     {
-        GameObject floatingNumbers = Instantiate(floatingNumbersPrefab, enemyPosition, enemyQuat);        
-        floatingNumbers.transform.SetParent(parent.transform);
+        GameObject floatingNumbers = Instantiate(floatingNumbersPrefab, enemyPosition, enemyQuat, this.transform);
         TextMeshPro textAsset = floatingNumbers.GetComponent<TextMeshPro>();
         textAsset.text = damage.ToString();
         textAsset.color = rgb;
