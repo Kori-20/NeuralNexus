@@ -18,18 +18,22 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private float health = 500;
     private float initialHealth;
     [SerializeField] private int damage = 10;
-    [SerializeField] private int armor = 120;
-    [SerializeField] private int shield = 200;
+    [SerializeField] private float armor = 120;
+    [SerializeField] private float shield = 200;
+    private float healthPool;
 
     [Header("Ui")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private UnityEngine.UI.Image healthBarFill;
     [SerializeField] private UnityEngine.UI.Image elementalIcon;
     [SerializeField] private string levelNumber;
     [SerializeField] private TextMeshProUGUI exarchonNamespace;
 
     private void Start()
     {
-        initialHealth = health;
+        healthPool = initialHealth = health + armor + shield;
+        //foreach (Transform child in transform) child.gameObject.SetActive(true);
+        HpBarColoring();
         ExarchonNaming();
         LevelAdaptation();
     }
@@ -81,6 +85,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
         shield -= shieldDamage;
 
         InGameUiManager.Instance.SpawnFloatingNumbers(transform.position, shieldDamage, Quaternion.identity, Color.blue, gameObject);
+
+        UpdateExarchonHpBar();
         if (shield < 0) shield = 0;
     }
 
@@ -95,7 +101,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
         {
             InGameUiManager.Instance.SpawnFloatingNumbers(transform.position, armorDamage, Quaternion.identity, Color.yellow, gameObject);
         }
-        
+
+        UpdateExarchonHpBar();
         if (armor < 0) armor = 0;
     }
 
@@ -119,17 +126,33 @@ public class EnemyBase : MonoBehaviour, IDamageable
         }
 
         UpdateExarchonHpBar();
-
-        if (health <= 0)
-        { 
-            health = 0;
-            EnemyDeath();
-        }
+        if (health <= 0) { health = 0; EnemyDeath(); }
     }
 
     private void UpdateExarchonHpBar()
     {
-        healthBar.value =  health/initialHealth;
+        //Health pool is calculated every damage instance so that mechanics using hp/shield/armor% can be used
+        healthPool = health + armor + shield;
+        HpBarColoring();
+        healthBar.value =  healthPool/initialHealth;
+        // healthBarFill.color = ;
+    }
+
+    private void HpBarColoring()
+    {
+        //Run once at start to set the color of the health bar && //Run every time the health bar is updated to change the color of the health bar
+        if (shield > 0)
+        {
+            healthBarFill.color = Color.blue;
+        }
+        else if (armor > 0)
+        {
+            healthBarFill.color = Color.gray;
+        }
+        else
+        {
+            healthBarFill.color = Color.red;
+        }
     }
 
     private void ExarchonNaming()

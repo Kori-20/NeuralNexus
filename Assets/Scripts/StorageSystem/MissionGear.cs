@@ -42,8 +42,8 @@ public class MissionGear : MonoBehaviour
     {
         
         weapon1 = GetAndCastGun(0);
-        weapon2 = GetAndCastGun(1);
-        backupWeapon = GetAndCastGun(2);
+        weapon2 = GetAndCastGun(4);
+        backupWeapon = GetAndCastGun(9);
 
         gunSlots = new Gun[3];
         gunSlots[0] = weapon1;

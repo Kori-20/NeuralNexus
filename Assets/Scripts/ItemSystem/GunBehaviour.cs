@@ -108,7 +108,7 @@ public class GunBehaviour : MonoBehaviour
         ////Elemental and Physical types are yet to be decided if they should be randomized on weapon generation or predetermined in data tables
         ////Prefab will be dependant on weapon type
         ProjectileManager.Instance.SpawnProjectile(tempo_bulletPrefab, shootPoint.position, directionPostSpread,
-            (int)currentGun.Damage, 100, tempo_physicalType,
+            (int)currentGun.Damage, 500, tempo_physicalType,
             tempo_elementType, EProjectileType.Player);
     }
 

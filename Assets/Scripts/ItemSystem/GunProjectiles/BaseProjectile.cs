@@ -29,6 +29,11 @@ public class BaseProjectile : MonoBehaviour
     private void Update()
     {
         // Move the bullet along its forward axis
+        //transform.Translate(speed * Time.deltaTime * Vector3.forward, Space.Self);
+    }
+
+    private void FixedUpdate()
+    {
         transform.Translate(speed * Time.deltaTime * Vector3.forward, Space.Self);
     }
 
