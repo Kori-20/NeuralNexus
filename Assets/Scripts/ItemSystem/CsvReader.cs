@@ -59,7 +59,8 @@ public static class CSVReader
             reloadSpeed: float.Parse(data[9]),
             type: (EWeaponType)Enum.Parse(typeof(EWeaponType), data[10]),
             p_type: (EPhysicalDamageType)Enum.Parse(typeof(EPhysicalDamageType), data[11]),
-            isAutomatic: bool.Parse(data[12])
+            isAutomatic: bool.Parse(data[12]),
+            pelletCount: int.Parse(data[13])
         );
     }
 

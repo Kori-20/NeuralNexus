@@ -1,11 +1,11 @@
-id,name,fullname,icon,description,damage,firerate,magazinesize,accuracy,reloadspeed,type,physicaltype,automatic
-0,BTG,Bozo The Gun,,Made by Bozo's for Bozo's,50,6,120,95,0.7,AssaultRifle,Explosive,TRUE
-1,C-Sniper,,,First mass produced Sniper prototype,50,0.4,6,100,3,SniperRifle,Piercing,FALSE
-2,C-Colt,,,First mass produced Colt pistol prototype,5,2,12,83,1.2,Pistol,Piercing,FALSE
-3,C-AK97,,,Fifth mass produced prototype iteration of the AK47,6,8,45,80,2,AssaultRifle,Energetic,TRUE
-4,C-50HPR,,,First mass produced 50 Call High Powered Rifle prototype,120,5,10,100,5,SniperRifle,Energetic,FALSE
-5,C-HPP,,,First mass produced High Powered Pistol prototype,35,1,6,95,2.5,Pistol,Energetic,TRUE
-6,C-BS39,,,Verssion 3.9 of mass produced Breaching Shotgun prototype,60,0.5,8,60,4,Shotgun,Explosive,FALSE
-7,C-DBars22,,,Verssion 2.2 of mass produced Dual Barretas prototype,4,3,24,70,4,DualPistol,Piercing,TRUE
-8,C-Deagle009,,,Ninth mass produced prototype iteration of the Deagle Pistol,20,0.5,10,90,1.5,Pistol,Piercing,FALSE
-9,C-SMG,,,First mass produced SMG prototype,3,10,30,85,2,SubmachineGun,Energetic,TRUE
+id,name,fullname,icon,description,damage,firerate,magazinesize,accuracy,reloadspeed,type,physicaltype,automatic,pelletcount
+0,BTG,Bozo The Gun,,Made by Bozo's for Bozo's,50,6,120,95,0.7,AssaultRifle,Explosive,TRUE,2
+1,C-Sniper,,,First mass produced Sniper prototype,50,0.4,6,100,3,SniperRifle,Piercing,FALSE,1
+2,C-Colt,,,First mass produced Colt pistol prototype,5,2,12,83,1.2,Pistol,Piercing,FALSE,1
+3,C-AK97,,,Fifth mass produced prototype iteration of the AK47,6,8,45,80,2,AssaultRifle,Energetic,TRUE,1
+4,C-50HPR,,,First mass produced 50 Call High Powered Rifle prototype,120,5,10,100,5,SniperRifle,Energetic,FALSE,1
+5,C-HPP,,,First mass produced High Powered Pistol prototype,35,1,6,95,2.5,Pistol,Energetic,TRUE,1
+6,C-BS39,,,Verssion 3.9 of mass produced Breaching Shotgun prototype,60,1.5,3,60,0.8,Shotgun,Explosive,TRUE,8
+7,C-DBars22,,,Verssion 2.2 of mass produced Dual Barretas prototype,4,3,24,70,4,DualPistol,Piercing,TRUE,2
+8,C-Deagle009,,,Ninth mass produced prototype iteration of the Deagle Pistol,20,0.5,10,90,1.5,Pistol,Piercing,FALSE,1
+9,C-SMG,,,First mass produced SMG prototype,13,10,30,85,2,SubmachineGun,Energetic,TRUE,1

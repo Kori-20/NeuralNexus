@@ -159,6 +159,7 @@ public class Controller : MonoBehaviour
 
     public void StartShooting()
     {
+        //Debug.Log("Start Shooting");
         if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot) != null)
         {
             gunBehave.Shoot();
@@ -232,9 +233,8 @@ public class Controller : MonoBehaviour
                 gunBehave.AmmoCheck();
                 //Debug.Log("Switch#0" + currentWeaponSlot + "##" + missionGear.GetGunInSlot(currentWeaponSlot).name); return;
             }
-            Debug.Log("Already in slot " + weaponSlot); return;
+            else { Debug.Log("Already in slot " + weaponSlot); }
         }
-        Debug.LogWarning("No gun assigned to weapon slot " + weaponSlot);
     }
 
     public void PlayerRecoil()

@@ -60,7 +60,7 @@ public class BaseProjectile : MonoBehaviour
         }
         else
         {
-            Debug.Log("No Damageable Interface Found");
+            //Debug.Log("No Damageable Interface Found");
         }
 
         ProjectileManager.Instance.RemoveFromPool(gameObject);

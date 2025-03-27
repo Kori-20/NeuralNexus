@@ -3400,6 +3400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5500c290561931f46975d556fb91d77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunID1: 0
+  gunID2: 4
+  gunID3: 6
   ability01: {fileID: 0}
   ability02: {fileID: 0}
   ability03: {fileID: 0}

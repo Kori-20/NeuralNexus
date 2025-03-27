@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6772429273951344264}
   - component: {fileID: 1795014921994241996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TrailFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7729196446700613748}
   - component: {fileID: 5929733580312066402}
   - component: {fileID: 4970041136048698479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: M_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

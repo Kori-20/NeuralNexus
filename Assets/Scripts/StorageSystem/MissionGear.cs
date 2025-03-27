@@ -9,6 +9,10 @@ public class MissionGear : MonoBehaviour
     [SerializeField] private Gun weapon1;
     [SerializeField] private Gun weapon2;
     [SerializeField] private Gun backupWeapon;
+    //Hardcoded gun IDs for now
+    [SerializeField] private int gunID1;
+    [SerializeField] private int gunID2;
+    [SerializeField] private int gunID3;
 
     [Header("Armor")]
     private Armor[] armorSlots;
@@ -41,9 +45,9 @@ public class MissionGear : MonoBehaviour
     private void SetSlotRefs()
     {
         
-        weapon1 = GetAndCastGun(0);
-        weapon2 = GetAndCastGun(4);
-        backupWeapon = GetAndCastGun(9);
+        weapon1 = GetAndCastGun(gunID1);
+        weapon2 = GetAndCastGun(gunID2);
+        backupWeapon = GetAndCastGun(gunID3);
 
         gunSlots = new Gun[3];
         gunSlots[0] = weapon1;
@@ -84,7 +88,8 @@ public class MissionGear : MonoBehaviour
                 originalGun.ReloadSpeed,
                 originalGun.WeaponType,
                 originalGun.PhysicalType,
-                originalGun.IsAutomatic
+                originalGun.IsAutomatic,
+                originalGun.PelletCount
             );
         }
 

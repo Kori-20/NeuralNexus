@@ -87,7 +87,7 @@ public class GunBehaviour : MonoBehaviour
         playerControl.ChangeSprite(EPlayerMotion.Shoot);
         playerControl.PlayerRecoil();
 
-        for (int i = 0; i < 1 /*///currentGun.PelletsPerShot///*/; i++)
+        for (int i = 0; i < currentGun.PelletCount; i++)
         {
             Vector3 spreadDirection = BulletSpread(direction);
             SpawnWeaponProjetile(spreadDirection);
@@ -95,7 +95,8 @@ public class GunBehaviour : MonoBehaviour
 
         currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
-        if (currentGun.CurrentAmmo <= 0) Reload();
+        if (currentGun.CurrentAmmo <= 0) Reload(); 
+        //###ISSUE FOUND
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
@@ -187,7 +188,7 @@ public class GunBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(1f / currentGun.FireRate);
         playerControl.SetCanFire(true);
-        Debug.Log("Can Fire");
+        //Debug.Log("Can Fire");
         delayFireC = null; // Reset the coroutine reference
     }
     #endregion
