@@ -93,7 +93,7 @@ public class GunBehaviour : MonoBehaviour
             SpawnWeaponProjetile(spreadDirection);
         }
 
-        //currentGun.CurrentAmmo--;
+        currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
         if (currentGun.CurrentAmmo <= 0) Reload();
     }
@@ -126,20 +126,6 @@ public class GunBehaviour : MonoBehaviour
 
     public void Reload()
     {
-        //Loses remaining ammo in the magazine On Reload
-        //if (currentGun.CurrentMags > 0 && reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
-        //{
-        //    Debug.Log("Reloading...");
-        //    playerControl.ChangeSprite(EPlayerMotion.Cover);
-        //    reloadCoroutine = StartCoroutine(ReloadCoroutine());
-        //    InGameUiManager.Instance.FillReload(currentGun.ReloadSpeed);
-        //}
-        //else if (currentGun.CurrentMags <= 0)
-        //{
-        //    Debug.Log("No magazines left.");
-        //}
-
-        ////Current mags condition removed, weapons will not have limited magazines
         if (reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
         {
             Debug.Log("Reloading...");
@@ -171,7 +157,7 @@ public class GunBehaviour : MonoBehaviour
         if (currentGun != null)
         {
             Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
-            ////currentGun.CurrentAmmo = currentGun.MagazineSize;
+            currentGun.CurrentAmmo = currentGun.MagazineSize;
             InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
         }
     }
