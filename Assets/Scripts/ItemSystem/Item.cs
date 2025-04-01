@@ -12,13 +12,13 @@ public class Item
     public bool IsDiscardable { get; private set; }
     public bool IsConsumable { get; private set; }
 
-    public Item(int id, string name, string description, Sprite icon,
-                    int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable)
+    public Item(int id, string name, string description,string iconPath,
+        int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable)
     {
         ID = id;
         Name = name;
         Description = description;
-        Icon = icon;
+        Icon = PathLoader.LoadSprite(iconPath);
         StackSize = stackSize;
         IsStackable = isStackable;
         IsEquippable = isEquippable;

@@ -16,8 +16,8 @@ public class Gun : Equipment
     public int CurrentAmmo { get; set; }
     public int PelletCount { get; private set; }
 
-    public Gun(int id, string name, string fullname, Sprite icon, string description, float damage, float fireRate, int magazineSize, int accuracy, float reloadSpeed, EWeaponType type, EPhysicalDamageType p_type, bool isAutomatic, int pelletCount)
-        : base(id, name, description, icon)
+    public Gun(int id, string name, string fullname, string iconPath, string description, float damage, float fireRate, int magazineSize, int accuracy, float reloadSpeed, EWeaponType type, EPhysicalDamageType p_type, bool isAutomatic, int pelletCount)
+        : base(id, name, description, iconPath)
     {
         FullName = fullname;
         Damage = damage;
