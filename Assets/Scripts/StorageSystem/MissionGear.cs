@@ -101,7 +101,7 @@ public class MissionGear : MonoBehaviour
 
     private void SetUi()
     {
-        ///Change the color 
+        ///Change the color with color of rarity of item being used
         if (weapon1 != null) InGameUiManager.Instance.SyncGunIcons(0, weapon1.Icon, Color.blue);
         if (weapon2 != null) InGameUiManager.Instance.SyncGunIcons(1, weapon2.Icon, Color.blue);
         if (backupWeapon != null) InGameUiManager.Instance.SyncGunIcons(2, backupWeapon.Icon, Color.blue);

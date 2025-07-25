@@ -54,7 +54,7 @@ public class ItemDatabaseWindow : EditorWindow
 
             if (item.Icon != null)
             {
-                GUILayout.Label(item.Icon.texture, GUILayout.Width(50), GUILayout.Height(50));
+                GUILayout.Label(item.Icon, GUILayout.Width(50), GUILayout.Height(50));
             }
 
             EditorGUILayout.EndVertical();

@@ -50,8 +50,7 @@ public static class CSVReader
             id: int.Parse(data[0]),
             name: data[1],
             fullname: data[2],
-            //iconPath: data[3]
-            iconPath: null,
+            iconPath: data[3],
             description: data[4],            
             damage: int.Parse(data[5]),
             fireRate: float.Parse(data[6]),

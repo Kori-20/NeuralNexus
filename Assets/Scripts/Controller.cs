@@ -369,7 +369,6 @@ public class Controller : MonoBehaviour
     public void SetIsCC(bool value) { isCC = value; }
     public bool GetIsCC() { return isCC; }
     public Camera GetCamera() { return cam; }
-
     public bool GetTransitStatus() { return inTransit; }
     #endregion
 }

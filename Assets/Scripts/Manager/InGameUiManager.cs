@@ -7,7 +7,8 @@ public class InGameUiManager : MonoBehaviour
 {
     private static InGameUiManager thisInstance;
     public static InGameUiManager Instance => thisInstance;
-
+    [Header("Null Texture")]
+    [SerializeField] private Sprite nullTexture;
     [Header("TextUi")]
     [SerializeField] private TextMeshProUGUI ammoAmmount;
     [SerializeField] private TextMeshProUGUI magAmmount;
@@ -62,7 +63,7 @@ public class InGameUiManager : MonoBehaviour
         //Debug.Log("Synced Gun: " + gunIndex + " Ammo: " + ammo + " Mags: " + mags);   
     }
 
-    public void SyncGunIcons(int id, Sprite img, Color rarityColor)
+    public void SyncGunIcons(int id, string img, Color rarityColor)
     {
         if (slotGunBckgList[id])
         {
@@ -73,7 +74,13 @@ public class InGameUiManager : MonoBehaviour
         if (slotGunList[id])
         {
             slotGunList[id].enabled = true;
-            slotGunList[id].sprite = img;
+
+            if (Resources.Load<Sprite>(img)) slotGunList[id].sprite = Resources.Load<Sprite>(img);
+            else
+            {
+                slotGunList[id].sprite = nullTexture;
+                Debug.LogWarning("Image not found: " + img + " Null image has been set");
+            }
         }
         else Debug.LogWarning("Slot Gun not found");
     }

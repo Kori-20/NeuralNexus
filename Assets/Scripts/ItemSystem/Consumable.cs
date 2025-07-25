@@ -3,7 +3,7 @@ using UnityEngine;
 public class Consumable : Item
 {
     // Constructor that passes all parameters to the base class constructor
-    public Consumable(int id, string name, string description, Sprite icon, int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable, EItemRarity rarity)
+    public Consumable(int id, string name, string description, string icon, int stackSize, bool isStackable, bool isEquippable, bool isDiscardable, bool isConsumable, EItemRarity rarity)
         : base(id, name, description, icon, stackSize, isStackable, isEquippable, isDiscardable, isConsumable) // Fix: Pass isConsumable to the base constructor
     {
         this.isConsumable = isConsumable;

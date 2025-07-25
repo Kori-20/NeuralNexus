@@ -42,8 +42,6 @@ public class GunBehaviour : MonoBehaviour
         {
             Trajectory();
         }
-
-        if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
 
     public void StopShooting()
@@ -95,8 +93,10 @@ public class GunBehaviour : MonoBehaviour
 
         currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
-        if (currentGun.CurrentAmmo <= 0) Reload(); 
+        if (currentGun.CurrentAmmo <= 0) Reload();
         //###ISSUE FOUND
+
+        if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
