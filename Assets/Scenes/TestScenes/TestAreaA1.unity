@@ -3401,7 +3401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunID1: 0
-  gunID2: 1
+  gunID2: 3
   gunID3: 6
   ability01: {fileID: 0}
   ability02: {fileID: 0}
@@ -5838,6 +5838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1fd17908b33514da44deedc5d296d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nullTexture: {fileID: 3827718779834432460, guid: 4b7682fb99ef73a4999772b9c4c590cc, type: 3}
   ammoAmmount: {fileID: 1565630552}
   magAmmount: {fileID: 0}
   weaponsUI: {fileID: 1491149621}
