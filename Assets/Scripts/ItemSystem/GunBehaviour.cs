@@ -94,7 +94,6 @@ public class GunBehaviour : MonoBehaviour
         currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
         if (currentGun.CurrentAmmo <= 0) Reload();
-        //###ISSUE FOUND
 
         if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
     }
@@ -148,7 +147,7 @@ public class GunBehaviour : MonoBehaviour
 
     public void AimDownSights(bool value)
     {
-        //Degub.Log("Aiming Down Sights");
+        playerControl.CamFieldOfView(value);
     }
 
     private IEnumerator ReloadCoroutine()
@@ -160,6 +159,8 @@ public class GunBehaviour : MonoBehaviour
             Debug.Log("Reloaded " + currentGun.MagazineSize + " bullets");
             currentGun.CurrentAmmo = currentGun.MagazineSize;
             InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
+
+            playerControl.SetCanFire(true);
         }
     }
 
@@ -180,16 +181,15 @@ public class GunBehaviour : MonoBehaviour
         while (true)
         {
             Trajectory();
-            yield return new WaitForSeconds(1f / currentGun.FireRate); // Wait for the cooldown period
+            yield return new WaitForSeconds(1f / currentGun.FireRate);
         }
     }
 
-    private IEnumerator DelayFire() //Forces non automatic weapons to follow their fire rate
+    private IEnumerator DelayFire() //Anti click spam
     {
         yield return new WaitForSeconds(1f / currentGun.FireRate);
         playerControl.SetCanFire(true);
-        //Debug.Log("Can Fire");
-        delayFireC = null; // Reset the coroutine reference
+        delayFireC = null;
     }
     #endregion
 

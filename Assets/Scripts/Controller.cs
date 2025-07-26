@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour
     [Header("Camera")]
     [SerializeField] public Camera cam;
     private PostProcessVolume blurVolume;
+    private float initialFOV;
 
     [Header("FakeRecoil")]
     private float recoilDuration = 0.01f;
@@ -64,6 +65,7 @@ public class Controller : MonoBehaviour
     {
         InputSetup();
         transform.position = CoverManager.Instance.GetCoverCenter();
+        initialFOV = cam.fieldOfView;
 
         if (missionGear.GetGunInSlot(currentWeaponSlot) != null){
             gunBehave.SetCurrentGun(missionGear.GetGunInSlot(currentWeaponSlot));
@@ -92,6 +94,12 @@ public class Controller : MonoBehaviour
             else MoveCursor(cursorSpeed);
         }
         else { StopShooting(); }
+    }
+
+    public void CamFieldOfView(bool changeFOV)
+    {
+        if (changeFOV) cam.fieldOfView = 17; //Hardcoded value replace with weapon stat for ads zoom ammount latter
+        else cam.fieldOfView = initialFOV;
     }
 
     private void MoveCursor(float mouseSpeed)
