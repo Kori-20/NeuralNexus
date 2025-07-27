@@ -93,9 +93,8 @@ public class GunBehaviour : MonoBehaviour
 
         currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
-        if (currentGun.CurrentAmmo <= 0) Reload();
 
-        if (delayFireC == null) delayFireC = StartCoroutine(DelayFire());
+        if (currentGun.CurrentAmmo <= 0) Reload();   
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
@@ -185,12 +184,6 @@ public class GunBehaviour : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayFire() //Anti click spam
-    {
-        yield return new WaitForSeconds(1f / currentGun.FireRate);
-        playerControl.SetCanFire(true);
-        delayFireC = null;
-    }
     #endregion
 
     public void SetCurrentGun(Gun gun)
