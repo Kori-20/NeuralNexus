@@ -122,7 +122,7 @@ public class InGameUiManager : MonoBehaviour
         string format = "null";
         if (!reverse) format = "GSlot_0" + (slotIndex + 1) + "_Open";
         else format = "GSlot_0" + (slotIndex + 1) + "_Close";
-        Debug.Log("Playing: " + format);
+        //Debug.Log("Playing: " + format);
         gunAnims[slotIndex].Play(format);
     }
 

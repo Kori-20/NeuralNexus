@@ -170,6 +170,7 @@ public class Controller : MonoBehaviour
         //Debug.Log("Start Shooting");
         if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot) != null)
         {
+            canFire = false;
             gunBehave.Shoot();
         }
     }
