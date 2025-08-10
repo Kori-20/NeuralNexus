@@ -10,7 +10,8 @@ public class GunBehaviour : MonoBehaviour
     private Gun currentGun = null; //Value set by player Controller on weapon switch
     private Controller playerControl = null;
 
-    private Coroutine fireC = null;
+    private Coroutine delayFireC = null;
+    private Coroutine autoFireC = null;
     private Coroutine reloadCoroutine = null;
 
     private int thisGunIndex = 0;
@@ -31,15 +32,18 @@ public class GunBehaviour : MonoBehaviour
     #region Fire Weapon Logic
     public void Shoot()
     {
-        if (fireC == null) fireC = StartCoroutine(FireRoutine());
+        playerControl.SetCanFire(false);
+        if (currentGun.IsAutomatic && autoFireC == null) autoFireC = StartCoroutine(AutomaticFire());
+        else Trajectory();
     }
 
     public void StopShooting()
     {
-        if (fireC != null)
+        if (autoFireC != null)
         {
-            StopCoroutine(fireC);
-            fireC = null;
+            playerControl.SetCanFire(true);
+            StopCoroutine(autoFireC);
+            autoFireC = null;
         }
     }
 
@@ -60,7 +64,6 @@ public class GunBehaviour : MonoBehaviour
                 if (currentGun.CurrentAmmo > 0 && !playerControl.GetTransitStatus())
                 {
                     FireBullet(directionToHitPoint);
-                    playerControl.SetCanFire(true);
                 }
             }
         }
@@ -84,7 +87,8 @@ public class GunBehaviour : MonoBehaviour
 
         currentGun.CurrentAmmo--;
         InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
-        if (currentGun.CurrentAmmo <= 0) Reload();
+
+        if (currentGun.CurrentAmmo <= 0) Reload();   
     }
 
     public virtual void SpawnWeaponProjetile(Vector3 directionPostSpread)
@@ -118,6 +122,7 @@ public class GunBehaviour : MonoBehaviour
         if (reloadCoroutine == null && !playerControl.GetIsCC() && currentGun.CurrentAmmo < currentGun.MagazineSize && Time.timeScale != 0)
         {
             Debug.Log("Reloading...");
+            if (autoFireC != null) StopCoroutine(autoFireC); autoFireC = null;
             playerControl.ChangeSprite(EPlayerMotion.Cover);
             reloadCoroutine = StartCoroutine(ReloadCoroutine());
             InGameUiManager.Instance.FillReload(currentGun.ReloadSpeed);
@@ -129,34 +134,14 @@ public class GunBehaviour : MonoBehaviour
         if (reloadCoroutine != null)
         {
             StopCoroutine(reloadCoroutine);
-            StopCoroutine(fireC);
             InGameUiManager.Instance.StopFillReload();
             reloadCoroutine = null;
-            fireC = null;
         }
     }
 
     public void AimDownSights(bool value)
     {
         playerControl.CamFieldOfView(value);
-    }
-
-    private IEnumerator FireRoutine()
-    {
-        if (currentGun.IsAutomatic)
-        {
-            while (true)
-            {
-                Trajectory();
-                yield return new WaitForSeconds(1f / currentGun.FireRate);
-            }
-        }
-        else
-        {
-            // Semi-auto: fire once and enforce delay
-            Trajectory();
-            yield return new WaitForSeconds(1f / currentGun.FireRate);
-        }
     }
 
     private IEnumerator ReloadCoroutine()
@@ -169,7 +154,11 @@ public class GunBehaviour : MonoBehaviour
             currentGun.CurrentAmmo = currentGun.MagazineSize;
             InGameUiManager.Instance.SyncAmmo(thisGunIndex, currentGun.CurrentAmmo);
 
-            playerControl.SetCanFire(true);
+            if (!playerControl.GetCanFire())
+            {
+                autoFireC = StartCoroutine(AutomaticFire());
+                playerControl.SetCanFire(true);
+            }
         }
     }
 
@@ -183,6 +172,15 @@ public class GunBehaviour : MonoBehaviour
             return hit.point;
         }
         return Vector3.zero;
+    }
+
+    private IEnumerator AutomaticFire()
+    {
+        while (true)
+        {
+            Trajectory();
+            yield return new WaitForSeconds(1f / currentGun.FireRate);
+        }
     }
 
     #endregion

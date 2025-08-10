@@ -170,7 +170,6 @@ public class Controller : MonoBehaviour
         //Debug.Log("Start Shooting");
         if (IsCursorWithinScreen() && Time.timeScale != 0 && gunBehave != null && canFire && !isCC && missionGear.GetGunInSlot(currentWeaponSlot) != null)
         {
-            canFire = false;
             gunBehave.Shoot();
         }
     }
@@ -321,11 +320,11 @@ public class Controller : MonoBehaviour
         switch (motion)
         {
             case EPlayerMotion.Cover:
-                playerSprite.sprite = covereringSprite;
+                if(playerSprite.sprite != null) playerSprite.sprite = covereringSprite;
                 break;
 
             case EPlayerMotion.Shoot:
-                playerSprite.sprite = shootingSprite;
+                if (playerSprite.sprite != null) playerSprite.sprite = shootingSprite;
                 break;
 
             default:
